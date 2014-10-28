@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C66B6F46-0BE7-4706-9B68-317F7DA739D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CustomerOrder.AcceptanceTests</RootNamespace>
+    <AssemblyName>CustomerOrder.AcceptanceTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.0.23.2\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Self">
+      <HintPath>..\packages\Nancy.Hosting.Self.0.23.2\lib\net40\Nancy.Hosting.Self.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Serialization.JsonNet">
+      <HintPath>..\packages\Nancy.Serialization.JsonNet.0.23.2\lib\net40\Nancy.Serialization.JsonNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\SpecFlow.NUnit.Runners.1.0.0\..\NUnit.Runners.2.6.3\tools\lib\nunit.core.interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NUnit.VisualStudio.TestAdapter">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TechTalk.SpecFlow, Version=1.9.0.77, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SpecFlow.1.9.0\lib\net35\TechTalk.SpecFlow.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contract\ProductAdded.cs" />
+    <Compile Include="ProductAdd\AddProductAtomEvents.feature.cs">
+      <DependentUpon>AddProductAtomEvents.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="ProductAdd\AddProduct.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddProduct.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Order\AllEventsForAnOrder.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AllEventsForAnOrder.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Contract\CustomerOrder.cs" />
+    <Compile Include="Contract\OrderTotals.cs" />
+    <Compile Include="Contract\Product.cs" />
+    <Compile Include="Contract\ProductPrice.cs" />
+    <Compile Include="Contract\Quantity.cs" />
+    <Compile Include="Order\GetOrder.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GetOrder.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ProductAdd\Steps\AddProductAtomEventSteps.cs" />
+    <Compile Include="ProductAdd\Steps\AddProductSteps.cs" />
+    <Compile Include="ProductAdd\Steps\FeatureBase.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="SpecFlowNUnitExtension.cs" />
+    <Compile Include="Helpers\Application.cs" />
+    <Compile Include="Contract\OrderPricedEvent.cs" />
+    <Compile Include="Contract\ProductAddedEvent.cs" />
+    <Compile Include="Order\Steps\AllEventsForAnOrderSteps.cs" />
+    <Compile Include="Order\Steps\FeatureBase.cs" />
+    <Compile Include="Helpers\CustomerOrderHttpClient.cs" />
+    <Compile Include="Helpers\PriceSetup.cs" />
+    <Compile Include="Order\OrderPricedEvent.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrderPricedEvent.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Order\Steps\GetOrderSteps.cs" />
+    <Compile Include="Order\Steps\OrderPricedEventSteps.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ProductAdd\AddProductAtomEvents.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AddProductAtomEvents.feature.cs</LastGenOutput>
+    </None>
+    <None Include="ProductAdd\AddProduct.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AddProduct.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Order\AllEventsForAnOrder.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>AllEventsForAnOrder.feature.cs</LastGenOutput>
+    </None>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Order\GetOrder.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GetOrder.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Order\OrderPricedEvent.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>OrderPricedEvent.feature.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomerOrder.Host\CustomerOrder.Host.csproj">
+      <Project>{35460aa4-b94a-4b64-9418-7243ec3d2f01}</Project>
+      <Name>CustomerOrder.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomerOrder.Model\CustomerOrder.Model.csproj">
+      <Project>{7A041090-7A30-4B63-9FE5-FFE49D01A7E9}</Project>
+      <Name>CustomerOrder.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomerOrder.PriceServiceStub\CustomerOrder.PriceServiceStub.csproj">
+      <Project>{082EE925-88A6-49CF-9B80-4C5DA98DB901}</Project>
+      <Name>CustomerOrder.PriceServiceStub</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

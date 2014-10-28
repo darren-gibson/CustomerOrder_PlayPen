@@ -1,0 +1,20 @@
+.quickproduct img {
+    float: left;
+    margin-right: 6px;
+}
+
+.quickproduct span {
+    line-height: normal;
+    text-indent: 0;
+    display: block;
+    padding-right: 6px;
+}
+
+/* Adjust Jancy NavMenu to work with top menu and format quick product buttons correctly. */
+#myNavmenu {
+    top: 52px;
+}
+
+#myNavmenu > ul > li > a {
+    padding: 0 15px;
+}
