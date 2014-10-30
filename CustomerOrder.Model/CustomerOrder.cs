@@ -34,6 +34,17 @@
             return new ProductAdded(productAdded, GetProductPrice(productAdded));  
         }
 
+        public PaymentAdded PaymentAdd(Tender amount)
+        {
+            CreatePaymentEvent(amount);
+            return new PaymentAdded(amount);
+        }
+
+        private void CreatePaymentEvent(Tender amount)
+        {
+            _events.Add(new PaymentEvent(amount));
+        }
+
         private IProductPrice RepriceOrderAndGetProductPrice(ProductAddedEvent productAdded)
         {
             try
@@ -75,7 +86,9 @@
         public IEnumerable<IProduct> Products
         {
             get { return _events.Where(e => e is IProduct).Cast<IProduct>(); }
-        }
+        } 
+
+        public IEnumerable<IPayment> Payments { get { return _events.Where(e => e is IPayment).Cast<IPayment>(); } }
 
         public event EventHandler<ProductAddedEventArgs> ProductAdded;
         public event EventHandler<OrderPricedEventArgs> OrderPriced;

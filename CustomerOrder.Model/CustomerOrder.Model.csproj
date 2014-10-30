@@ -45,6 +45,7 @@
     <Compile Include="Command\ICommand.cs" />
     <Compile Include="Command\ICommandQueue.cs" />
     <Compile Include="Command\ICommandRepository.cs" />
+    <Compile Include="Command\PaymentAddCommand.cs" />
     <Compile Include="Command\ProductAddCommand.cs" />
     <Compile Include="Command\SimpleCommandQueue.cs" />
     <Compile Include="Currency.cs" />
@@ -56,7 +57,9 @@
     <Compile Include="Events\IEvent.cs" />
     <Compile Include="ICustomerOrder.cs" />
     <Compile Include="ICustomerOrderFactory.cs" />
+    <Compile Include="IncompatibleTenderTypeException.cs" />
     <Compile Include="IncompatibleUnitOfMeasureException.cs" />
+    <Compile Include="IPayment.cs" />
     <Compile Include="IPrice.cs" />
     <Compile Include="IPricedOrder.cs" />
     <Compile Include="IProduct.cs" />
@@ -65,6 +68,9 @@
     <Compile Include="OrderIdentifier.cs" />
     <Compile Include="Events\ProductAddedEvent.cs" />
     <Compile Include="OrderPricedEventArgs.cs" />
+    <Compile Include="Events\PaymentEvent.cs" />
+    <Compile Include="Tender.cs" />
+    <Compile Include="PaymentAdded.cs" />
     <Compile Include="ProductAdded.cs" />
     <Compile Include="ProductAddedEventArgs.cs" />
     <Compile Include="ProductIdentifier.cs" />

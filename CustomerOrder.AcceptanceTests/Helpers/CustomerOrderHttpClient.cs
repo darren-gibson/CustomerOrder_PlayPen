@@ -119,5 +119,20 @@ namespace CustomerOrder.AcceptanceTests.Helpers
         {
             return ExecuteGet(new Uri(absoluteUri), acceptHeader);
         }
+
+        public HttpResponseMessage PaymentAdd(string relativeUrl, string tenderType, Money amount)
+        {
+            using (var client = new HttpClient { BaseAddress = new Uri(BaseAddress) })
+            {
+                var uri = BuildAbsoluteUri(relativeUrl);
+                var jsonText = string.Format(@"{{""tenderType"": ""{0}"", ""amount"": {{""amount"": ""{1:n}"", ""currency"": ""{2}"" }}}}", 
+                    tenderType, amount, amount.Code);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jsonText);
+                var postTask = client.PutAsync(uri, new StringContent(jsonText, Encoding.UTF8, "application/json"));
+
+                return postTask.Result;
+            }
+        }
     }
 }

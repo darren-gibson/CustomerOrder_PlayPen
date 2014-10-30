@@ -14,7 +14,17 @@
             throw new NotImplementedException();
         }
 
+        public PaymentAdded PaymentAdd(Tender amount)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual IEnumerable<IProduct> Products
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IEnumerable<IPayment> Payments
         {
             get { throw new NotImplementedException(); }
         }

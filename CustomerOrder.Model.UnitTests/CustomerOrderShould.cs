@@ -156,6 +156,117 @@
 
         #endregion
 
+
+        #region ProductAdd
+        [Test]
+        public void AddThePaymentToTheOrderWhenThePaymentAddIsCalled()
+        {
+            var expectedTender = GetTender();
+            _orderUnderTest.PaymentAdd(expectedTender);
+
+            Assert.IsTrue(_orderUnderTest.Payments.Any(p => p.Amount.Equals(expectedTender)), "Expect Payments to contain the Tender");
+        }
+
+        private static Tender GetTender()
+        {
+            return new Tender(new Money(Currency.CHF, 102.3m), "Cash");
+        }
+
+        [Test]
+        public void ReturnAPaymentAddedType()
+        {
+            var expectedTender = GetTender();
+            var paymentAdded = _orderUnderTest.PaymentAdd(expectedTender);
+
+            Assert.AreEqual(expectedTender, paymentAdded.Amount);
+        }
+
+        /*
+
+                [Test]
+                public void RaiseAProductAddedEventWhenTheProductIsAdded()
+                {
+                    IProduct productAddedInEvent = null;
+                    CustomerOrder customerOrderInEvent = null;
+                    _orderUnderTest.ProductAdded += (sender, args) =>
+                    {
+                        customerOrderInEvent = (CustomerOrder)sender;
+                        productAddedInEvent = (args.ProductAdded);
+                    };
+
+                    _orderUnderTest.ProductAdd(Guid.NewGuid(), new Quantity(1, UnitOfMeasure.Each));
+
+                    Assert.AreSame(_orderUnderTest, customerOrderInEvent);
+                    Assert.AreEqual(_orderUnderTest.Products.First(), productAddedInEvent);
+                }
+
+                [Test]
+                public void RaiseAnOrderPricedEventWhenTheProductIsAdded()
+                {
+                    CustomerOrder customerOrderInEvent = null;
+                    IPricedOrder pricedOrderInEvent = null;
+                    _orderUnderTest.OrderPriced += (sender, args) =>
+                    {
+                        customerOrderInEvent = (CustomerOrder)sender;
+                        pricedOrderInEvent = args.PricedOrder;
+                    };
+
+                    _orderUnderTest.ProductAdd(Guid.NewGuid(), Quantity.Default);
+
+                    Assert.AreSame(_orderUnderTest, customerOrderInEvent);
+                    Assert.AreEqual(_pricedOrderMock.Object, pricedOrderInEvent);
+                }
+
+                [Test]
+                public void PriceTheProductAddedByCallingThePriceInterface()
+                {
+                    ProductIdentifier expectedProductIdentifier = Guid.NewGuid();
+                    var expectedPrice = CreateProductPrice();
+                    _pricedOrderMock.Setup(o => o.GetProductPrice(It.Is<IProduct>(p => p.ProductIdentifier.Equals(expectedProductIdentifier)))).Returns(expectedPrice);
+
+                    _orderUnderTest.ProductAdded += (sender, args) => Assert.AreEqual(expectedPrice, args.Price);
+
+                    _orderUnderTest.ProductAdd(expectedProductIdentifier, new Quantity(1, UnitOfMeasure.Each));
+                }
+
+                [Test]
+                public void HavePlacedTheProductInTheListOfProductsBeforeCallingThePriceOperation()
+                {
+                    ProductIdentifier expectedProductIdentifier = Guid.NewGuid();
+
+                    _priceMock.Setup(price => price.Price(_orderUnderTest)).Returns(_pricedOrderMock.Object)
+                        .Callback(() =>
+                                Assert.IsTrue(_orderUnderTest.Products.Any(p => p.ProductIdentifier == expectedProductIdentifier),
+                                "The product needs to be added before Price is called"));
+
+                    _orderUnderTest.ProductAdd(expectedProductIdentifier, new Quantity(1, UnitOfMeasure.Each));
+                }
+
+                [Test]
+                public void ThrowAnyExceptionRaisedByThePricingService()
+                {
+                    _priceMock.Setup(p => p.Price(It.IsAny<ICustomerOrder>())).Throws<InvalidCastException>();
+                    Assert.Throws<InvalidCastException>(() => _orderUnderTest.ProductAdd(Guid.NewGuid(), Quantity.Default));
+                }
+
+                [Test]
+                public void NotAddTheProductToTheListIfPricingThrowsAnException()
+                {
+                    ProductIdentifier expectedProductIdentifier = Guid.NewGuid();
+                    _priceMock.Setup(p => p.Price(It.IsAny<ICustomerOrder>())).Throws<InvalidCastException>();
+                    try
+                    {
+                        _orderUnderTest.ProductAdd(expectedProductIdentifier, Quantity.Default);
+                    }
+                    catch (InvalidCastException) { }
+                    Assert.IsFalse(_orderUnderTest.Products.Any(p =>
+                    p.ProductIdentifier.Equals(expectedProductIdentifier)), "Expect Products NOT to contain product identifier");
+                }
+
+        */
+        #endregion
+
+
         #region GetProductPrice
 
         [Test]
@@ -200,7 +311,5 @@
             Assert.AreEqual(expectedNetTotal, actualNet);
         }
         #endregion
-
-
     }
 }

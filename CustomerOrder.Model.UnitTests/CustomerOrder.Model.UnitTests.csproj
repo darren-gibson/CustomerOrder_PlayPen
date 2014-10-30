@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Command\CommandDouble.cs" />
     <Compile Include="Command\CommandRunnerShould.cs" />
+    <Compile Include="Command\PaymentAddCommandShould.cs" />
     <Compile Include="Command\ProductAddCommandShould.cs" />
     <Compile Include="Command\QuickCommand.cs" />
     <Compile Include="Command\SimpleCommandQueueShould.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="MoneyShould.cs" />
     <Compile Include="OrderIdentifierShould.cs" />
     <Compile Include="OrderPricedEventArgsShould.cs" />
+    <Compile Include="TenderShould.cs" />
     <Compile Include="ProductAddedEventArgsShould.cs" />
     <Compile Include="ProductIdentifierShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

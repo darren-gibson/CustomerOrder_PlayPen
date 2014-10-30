@@ -3,7 +3,6 @@
 namespace CustomerOrder.Model.Command
 {
     using System;
-    using System.Runtime.Serialization;
 
     public class ProductAddCommand : AbstractCommand
     {

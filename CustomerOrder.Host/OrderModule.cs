@@ -1,11 +1,12 @@
 ﻿namespace CustomerOrder.Host
 {
-    using Annotations;
     using Contract.DTO;
+    using Model;
     using Model.Command;
     using Model.Repository;
     using Nancy;
     using Nancy.ModelBinding;
+    using CustomerOrder = Contract.DTO.CustomerOrder;
     using Quantity = Model.Quantity;
 
     public class OrderModule : NancyModule
@@ -26,6 +27,11 @@
             {
                 var order = repository.GetOrCreateOrderById((string)parameters["orderId"]);
                 return new CustomerOrder(order);
+            };
+            Put["/{orderId}/payments"] = parameters =>
+            {
+                var command = new PaymentAddCommand(_repository, (string)parameters.orderId, new Tender(new Money(Currency.GBP, 121.7m), "FixMe"));
+                return RunCommand(command, Context, parameters.orderId);
             };
         }
 
