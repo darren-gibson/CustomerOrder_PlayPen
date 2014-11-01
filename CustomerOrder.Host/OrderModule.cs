@@ -7,7 +7,6 @@
     using Nancy;
     using Nancy.ModelBinding;
     using CustomerOrder = Contract.DTO.CustomerOrder;
-    using Quantity = Model.Quantity;
 
     public class OrderModule : NancyModule
     {
@@ -30,7 +29,8 @@
             };
             Put["/{orderId}/payments"] = parameters =>
             {
-                var command = new PaymentAddCommand(_repository, (string)parameters.orderId, new Tender(new Money(Currency.GBP, 121.7m), "FixMe"));
+                var paymentAdd = this.Bind<PaymentAdd>();
+                var command = new PaymentAddCommand(_repository, paymentAdd.OrderId, new Tender(paymentAdd.Amount.ToMoney(), paymentAdd.TenderType));
                 return RunCommand(command, Context, parameters.orderId);
             };
         }
@@ -57,12 +57,7 @@
         {
             if (productAdd.Quantity == null)
                 return new ProductAddCommand(_repository, productAdd.OrderId, productAdd.ProductId);
-            return new ProductAddCommand(_repository, productAdd.OrderId, productAdd.ProductId, ConvertToQuantity(productAdd));
-        }
-
-        private static Quantity ConvertToQuantity(ProductAdd productAdd)
-        {
-            return new Quantity(productAdd.Quantity.Amount, productAdd.Quantity.UOM);
+            return new ProductAddCommand(_repository, productAdd.OrderId, productAdd.ProductId, productAdd.Quantity.ToQuantity());
         }
     }
 }

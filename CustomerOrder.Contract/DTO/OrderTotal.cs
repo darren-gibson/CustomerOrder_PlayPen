@@ -12,7 +12,7 @@
             _order = order;
         }
         [JsonProperty(PropertyName = "net")]
-        public Price Net { get { return new Price(_order.NetTotal); } }
+        public Money Net { get { return new Money(_order.NetTotal); } }
 
     }
 }

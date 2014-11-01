@@ -88,6 +88,18 @@
 
         #endregion
 
+        #region Amount Tests
+
+        [Test]
+        public void TheAmountIsSetUsingTheConstructor()
+        {
+            var expectedAmount = GetMoney(923m);
+            var t1 = new Tender(expectedAmount, Visa);
+            Assert.AreEqual(expectedAmount, t1.Amount);
+        }
+
+        #endregion
+
         #region Addition Tests tests
         [Test]
         public void BeAbleToAddTwoTenderObjectsTogether()

@@ -8,6 +8,7 @@
     using NUnit.Framework;
     using ProductAdd.Steps;
     using TechTalk.SpecFlow;
+    using Money = Model.Money;
 
     [Binding]
     [Scope(Feature = "Order Priced Event")]

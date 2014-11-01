@@ -76,11 +76,11 @@ testRunner.Given("I have a unique order number {orderNo}", ((string)(null)), ((T
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add a cash payment to order")]
-        [NUnit.Framework.CategoryAttribute("addTender")]
+        [NUnit.Framework.CategoryAttribute("addPayment")]
         public virtual void AddACashPaymentToOrder()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add a cash payment to order", new string[] {
-                        "addTender"});
+                        "addPayment"});
 #line 11
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -93,6 +93,46 @@ this.FeatureBackground();
 #line 14
  testRunner.And("the result should contain a Location header that matches /orders/{orderNo}/reques" +
                     "ts/.+", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("the result of calling payment adding a payment to the order should")]
+        [NUnit.Framework.CategoryAttribute("addPayment")]
+        [NUnit.Framework.CategoryAttribute("paymentAdded")]
+        public virtual void TheResultOfCallingPaymentAddingAPaymentToTheOrderShould()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("the result of calling payment adding a payment to the order should", new string[] {
+                        "addPayment",
+                        "paymentAdded"});
+#line 17
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 20
+ testRunner.When("I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tend" +
+                    "er type of CASH and an amount of 10.00 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 21
+ testRunner.And("I GET the resource identified by the Uri in the Location Header with an Accept he" +
+                    "ader of application/json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 22
+ testRunner.Then("the result should be an HTTP 200 OK Status", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Name",
+                        "Value"});
+            table1.AddRow(new string[] {
+                        "Content-Type",
+                        "application/vnd.tesco.CustomerOrder.PaymentAdded+json"});
+            table1.AddRow(new string[] {
+                        "tenderType",
+                        "CASH"});
+            table1.AddRow(new string[] {
+                        "amount",
+                        "10.00 GBP"});
+#line 23
+ testRunner.And("the result should contain:", ((string)(null)), table1, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

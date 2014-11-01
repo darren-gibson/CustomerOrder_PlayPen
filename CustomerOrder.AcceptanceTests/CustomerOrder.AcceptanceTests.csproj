@@ -78,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contract\PaymentAdded.cs" />
+    <Compile Include="Contract\Money.cs" />
     <Compile Include="Contract\ProductAdded.cs" />
     <Compile Include="ProductAdd\AddProductAtomEvents.feature.cs">
       <DependentUpon>AddProductAtomEvents.feature</DependentUpon>

@@ -40,13 +40,16 @@
   <ItemGroup>
     <Compile Include="DTO\CustomerOrder.cs" />
     <Compile Include="DTO\OrderTotal.cs" />
-    <Compile Include="DTO\Price.cs" />
+    <Compile Include="DTO\PaymentAdded.cs" />
+    <Compile Include="DTO\Money.cs" />
     <Compile Include="DTO\Product.cs" />
+    <Compile Include="DTO\PaymentAdd.cs" />
     <Compile Include="DTO\ProductAdd.cs" />
     <Compile Include="DTO\ProductAdded.cs" />
     <Compile Include="DTO\ProductNotFoundException.cs" />
     <Compile Include="DTO\ProductPrice.cs" />
     <Compile Include="DTO\Quantity.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultSerializer\CommandResultSerializer.cs" />
     <Compile Include="ResultSerializer\IResultSerializer.cs" />

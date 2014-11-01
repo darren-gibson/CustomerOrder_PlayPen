@@ -5,6 +5,6 @@
     internal class OrderTotals
     {
         [JsonProperty(PropertyName = "net")]
-        public Price Net { get; set; }
+        public Money Net { get; set; }
     }
 }

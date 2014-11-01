@@ -12,6 +12,7 @@
     using TechTalk.SpecFlow;
 
     using CustomerOrder = Contract.CustomerOrder;
+    using Money = Contract.Money;
     using Quantity = Contract.Quantity;
 
     [Binding]
@@ -118,9 +119,9 @@
             }
         }
 
-        private static Money ToMoney(Price price)
+        private static Model.Money ToMoney(Money money)
         {
-            return new Money(ToCurrency(price.CurrencyCode), price.Amount);
+            return new Model.Money(ToCurrency(money.CurrencyCode), money.Amount);
         }
         private CustomerOrder GetOrderFromResult()
         {

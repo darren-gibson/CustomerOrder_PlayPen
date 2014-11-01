@@ -1,10 +1,12 @@
 ﻿namespace CustomerOrder.Contract.DTO
 {
     using System;
+    using Annotations;
     using Model;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class Quantity
     {
         public Quantity() { }
@@ -20,5 +22,10 @@
         [JsonProperty(PropertyName = "uom", ItemConverterType = typeof(StringEnumConverter))]
         // ReSharper disable once InconsistentNaming
         public UnitOfMeasure UOM { get; set; }
+
+        public Model.Quantity ToQuantity()
+        {
+            return new Model.Quantity(Amount, UOM);
+        }
     }
 }

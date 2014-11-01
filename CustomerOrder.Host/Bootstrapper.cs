@@ -10,6 +10,7 @@
     using Nancy;
     using Nancy.Bootstrapper;
     using Nancy.TinyIoc;
+    using Newtonsoft.Json;
     using PriceServiceStub;
     using ProductServiceStub;
 
@@ -18,7 +19,6 @@
         // The bootstrapper enables you to reconfigure the composition of the framework,
         // by overriding the various methods and properties.
         // For more information https://github.com/NancyFx/Nancy/wiki/Bootstrapper
-
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             var commandRepository = new InMemoryCommandRepository();
@@ -47,7 +47,8 @@
             return new CommandResultSerializer(new[]
                 {
                     new KeyValuePair<Type, IResultSerializer>(typeof (ProductAdded), new ResultSerializer<ProductAdded, Contract.DTO.ProductAdded>()),
-                    new KeyValuePair<Type, IResultSerializer>(typeof (ProductNotFoundException), new ResultSerializer<ProductNotFoundException, Contract.DTO.ProductNotFoundException>())
+                    new KeyValuePair<Type, IResultSerializer>(typeof (ProductNotFoundException), new ResultSerializer<ProductNotFoundException, Contract.DTO.ProductNotFoundException>()),
+                    new KeyValuePair<Type, IResultSerializer>(typeof (PaymentAdded), new ResultSerializer<PaymentAdded, Contract.DTO.PaymentAdded>()),
                 });
         }
 

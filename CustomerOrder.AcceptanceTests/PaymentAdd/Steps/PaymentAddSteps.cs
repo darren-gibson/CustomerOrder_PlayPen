@@ -1,8 +1,11 @@
 ﻿namespace CustomerOrder.AcceptanceTests.PaymentAdd.Steps
 {
     using System;
+    using System.Net.Http;
+    using System.Threading;
     using Helpers;
     using Model;
+    using Newtonsoft.Json;
     using NUnit.Framework;
     using ProductAdd.Steps;
     using TechTalk.SpecFlow;
@@ -39,5 +42,47 @@
             expectedMask = ReplaceTokensInString(expectedMask);
             StringAssert.IsMatch(expectedMask, Result.Headers.Location.ToString());
         }
+
+        [When(@"I GET the resource identified by the Uri in the Location Header with an Accept header of (.*)")]
+        public void WhenIGetTheResourceIdentifiedByTheUriInTheLocationHeaderWithAnAcceptHeaderOf(string acceptHeader)
+        {
+            Thread.Sleep(50); // Allow the Asynchronous event to happen
+            var url = Result.Headers.Location;
+            Result = Client.GetUrl(url.ToString(), acceptHeader);
+        }
+
+        [Then(@"the result should contain:")]
+        public void ThenTheResultShouldContain(Table table)
+        {
+            var paymentAdded = GetPaymentAdded(Result);
+
+            foreach (var tableRow in table.Rows)
+            {
+                var name = tableRow["Name"];
+                var expectedValue = ReplaceTokensInString(tableRow["Value"]);
+
+                switch (name)
+                {
+                    case "Content-Type":
+                        Assert.AreEqual(expectedValue, Result.Content.Headers.ContentType.MediaType);
+                        break;
+                    case "tenderType":
+                        Assert.AreEqual(expectedValue, paymentAdded.TenderType);
+                        break;
+                    case "amount":
+                        AssertMoneyEqual(expectedValue, paymentAdded.Amount);
+                        break;
+                    default:
+                        Assert.Fail("Unknown field: {0}", name);
+                        break;
+                }
+            }
+        }
+
+        private Contract.PaymentAdded GetPaymentAdded(HttpResponseMessage result)
+        {
+            return JsonConvert.DeserializeObject<Contract.PaymentAdded>(result.Content.ReadAsStringAsync().Result);
+        }
+
     }
 }

@@ -7,8 +7,8 @@
     internal class ProductPrice
     {
         [JsonProperty]
-        public Price Unit { get; set; }
+        public Money Unit { get; set; }
         [JsonProperty]
-        public Price Net { get; set; }
+        public Money Net { get; set; }
     }
 }

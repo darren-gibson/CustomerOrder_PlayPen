@@ -52,6 +52,7 @@
         }
 
         public string TenderType { get { return _tenderType; } }
+        public Money Amount { get { return _amount; } }
 
         public override string ToString()
         {

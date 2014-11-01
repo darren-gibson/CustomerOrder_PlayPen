@@ -38,6 +38,14 @@ namespace CustomerOrder.AcceptanceTests.ProductAdd.Steps
             return new Money(ToCurrency(parts[1]), decimal.Parse(parts[0]));
         }
 
+
+        protected void AssertMoneyEqual(string expectedMoneyString, Contract.Money actualMoney)
+        {
+            var parts = expectedMoneyString.Split(' ');
+            Assert.AreEqual(decimal.Parse(parts[0]), actualMoney.Amount);
+            Assert.AreEqual(parts[1], actualMoney.CurrencyCode);
+        }
+
         protected SyndicationItem GetFirstSyndicationItem()
         {
             var feed = ReadSyndicationFeed();
@@ -55,9 +63,9 @@ namespace CustomerOrder.AcceptanceTests.ProductAdd.Steps
             return feed;
         }
 
-        protected string ReplaceTokensInString(string url)
+        protected string ReplaceTokensInString(string stringWithTokens)
         {
-            var result = url.Replace(OrderNumberToken, OrderNumber);
+            var result = stringWithTokens.Replace(OrderNumberToken, OrderNumber);
             return result;
         }
 
