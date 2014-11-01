@@ -25,7 +25,7 @@
             var runner = new CommandRunner(commandRepository, new SimpleCommandQueue());
             var priceGateway = new SimplePriceGateway();
             var factory = new EventRasingCustomerOrderFactory(new CustomerOrderFactory(priceGateway));
-            var customerOrderRepository = new InMemoryCustomerOrderRepository(factory);
+            var customerOrderRepository = new InMemoryCustomerOrderRepository(factory, Currency.GBP);
             var atomEventRepository = new SimpleInMemoryAtomEventRepository();
             var commandResultSerializer = GetResultSerializers();
             var simpleProductService = new SimpleProductService();

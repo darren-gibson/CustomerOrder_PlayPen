@@ -56,6 +56,13 @@
             Result = Client.ProductAdd(ReplaceTokensInString(url), productId, quantity);
         }
 
+        [When(@"I add a Payment to an order by calling PUT (.*) with a tender type of (.*) and an amount of (.*) (.{3})")]
+        public void WhenIAddAPaymentToAnOrderByCallingPutOrdersOrderNoTendersWithATenderTypeOfAndAnAmountOf(string url, string tenderType, decimal amount, Currency currency)
+        {
+            Result = Client.PaymentAdd(ReplaceTokensInString(url), tenderType, new Model.Money(currency, amount));
+        }
+
+
         [When(@"I GET (.*) with an accept header of (.*)")]
         public void WhenIGetOrderWithTheOrderNo(string relativeUrl, string acceptHeader)
         {
@@ -110,8 +117,14 @@
             var order = GetOrderFromResult();
             switch (totalName)
             {
-                case "netTotal":
+                case "total.net":
                     Assert.AreEqual(expectedAmount, ToMoney(order.Total.Net));
+                    break;
+                case "total.due":
+                    Assert.AreEqual(expectedAmount, ToMoney(order.Total.Due));
+                    break;
+                case "total.paid":
+                    Assert.AreEqual(expectedAmount, ToMoney(order.Total.Paid));
                     break;
                 default:
                     Assert.Fail("unknown total field");

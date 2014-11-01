@@ -12,14 +12,14 @@
             _priceGateway = priceGateway;
         }
 
-        public ICustomerOrder MakeCustomerOrder(OrderIdentifier identifier)
+        public ICustomerOrder MakeCustomerOrder(OrderIdentifier identifier, Currency currency)
         {
-            return new CustomerOrder(identifier, _priceGateway);
+            return new CustomerOrder(identifier, currency, _priceGateway);
         }
 
-        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
+        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, Currency currency, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
         {
-            return new CustomerOrder(orderIdentifier, _priceGateway, events, pricedOrder);
+            return new CustomerOrder(orderIdentifier, currency, _priceGateway, events, pricedOrder);
         }
     }
 }

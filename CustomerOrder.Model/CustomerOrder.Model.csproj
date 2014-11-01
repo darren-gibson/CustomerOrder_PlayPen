@@ -49,6 +49,7 @@
     <Compile Include="Command\ProductAddCommand.cs" />
     <Compile Include="Command\SimpleCommandQueue.cs" />
     <Compile Include="Currency.cs" />
+    <Compile Include="CurrencyDoesNotMatchOrderException.cs" />
     <Compile Include="CustomerOrder.cs" />
     <Compile Include="CustomerOrderFactory.cs" />
     <Compile Include="CustomerOrderMadeEventArgs.cs" />

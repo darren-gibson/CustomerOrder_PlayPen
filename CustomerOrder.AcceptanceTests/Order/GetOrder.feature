@@ -47,4 +47,14 @@ Scenario: An order is priced with a netTotal amount that tells the customer exac
 	And I add a Product to the order by calling POST /orders/{orderNo}/productadd with a ProductID of "5000157024671"
 	When I GET /orders/{orderNo} with an accept header of application/json
 	Then the result should be an HTTP 200 OK Status
-	And the order should have a netTotal of 7.26 GBP
+	And the order should have a total.net of 7.26 GBP
+
+Scenario: The amount due for an order is reduced by the total amount paid
+	When I add a Product to the order by calling POST /orders/{orderNo}/productadd with a ProductID of "5053947861260" with a Quantity of "3 Each"
+	And I add a Product to the order by calling POST /orders/{orderNo}/productadd with a ProductID of "5000157024671"
+	And I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tender type of CASH and an amount of 2.25 GBP
+	When I GET /orders/{orderNo} with an accept header of application/json
+	Then the result should be an HTTP 200 OK Status
+	And the order should have a total.net of 10.55 GBP
+	And the order should have a total.paid of 2.25 GBP
+	And the order should have a total.due of 8.30 GBP

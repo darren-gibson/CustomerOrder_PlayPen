@@ -13,16 +13,16 @@
             _customerOrderFactory = customerOrderFactory;
         }
 
-        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier)
+        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, Currency currency)
         {
-            var customerOrder = _customerOrderFactory.MakeCustomerOrder(orderIdentifier);
+            var customerOrder = _customerOrderFactory.MakeCustomerOrder(orderIdentifier, currency);
             OnCustomerOrderMade(new CustomerOrderMadeEventArgs(customerOrder));
             return customerOrder;
         }
 
-        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
+        public ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, Currency currency, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
         {
-            var customerOrder = _customerOrderFactory.MakeCustomerOrder(orderIdentifier, events, pricedOrder);
+            var customerOrder = _customerOrderFactory.MakeCustomerOrder(orderIdentifier, currency, events, pricedOrder);
             OnCustomerOrderMade(new CustomerOrderMadeEventArgs(customerOrder));
             return customerOrder;
         }

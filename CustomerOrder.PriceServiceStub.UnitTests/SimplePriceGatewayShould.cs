@@ -22,8 +22,7 @@
         public void ReturnAPricedOrderThatContainsAPriceForEachProductInTheOrder()
         {
             var products = SetupProducts(new decimal[] { 3, 4, 5 }).ToArray();
-            var mockOrder = new Mock<ICustomerOrder>();
-            mockOrder.SetupGet(o => o.Products).Returns(products);
+            var mockOrder = CreateMockOrder(products);
 
             var pricedOrder = _priceUnderTest.Price(mockOrder.Object);
 
@@ -35,12 +34,19 @@
             Assert.AreEqual(GetPrice(5), pricedOrder.GetProductPrice(products[2]).NetPrice);
         }
 
+        private Mock<ICustomerOrder> CreateMockOrder(IEnumerable<IProduct> products)
+        {
+            var mockOrder = new Mock<ICustomerOrder>();
+            mockOrder.SetupGet(o => o.Products).Returns(products);
+            mockOrder.SetupGet(o => o.Currency).Returns(Currency.GBP);
+            return mockOrder;
+        }
+
         [Test]
         public void CorrectlyPriceTheNetPriceBasedOnTheQuantity()
         {
             var product = SetupProductAndSetPrice(1.20m, 3);
-            var mockOrder = new Mock<ICustomerOrder>();
-            mockOrder.SetupGet(o => o.Products).Returns(new[] { product });
+            var mockOrder = CreateMockOrder(new[] {product});
 
             var pricedOrder = _priceUnderTest.Price(mockOrder.Object);
 
@@ -52,8 +58,7 @@
         public void ReturnTheSumOfAllOfTheProductsInTheOrderAsTheNetAmount()
         {
             var products = SetupProducts(new[] { 3, 4.2m, 5 }, 3).ToArray();
-            var mockOrder = new Mock<ICustomerOrder>();
-            mockOrder.SetupGet(o => o.Products).Returns(products);
+            var mockOrder = CreateMockOrder(products);
 
             var pricedOrder = _priceUnderTest.Price(mockOrder.Object);
 
@@ -72,9 +77,27 @@
             Assert.Throws<ProductNotFoundException>(() => _priceUnderTest.Price(mockOrder.Object));
         }
 
-        private Money GetPrice(decimal price)
+        [Test]
+        public void PricesUsingTheCurrencyInTheOrder()
         {
-            return new Money(Currency.GBP, price);
+            var product = SetupProductAndSetPrice(1.20m, 3);
+            _priceUnderTest.SetPrice(product.ProductIdentifier, GetQuantityPrice(9.8m, Currency.CHF));
+
+            var mockOrder = new Mock<ICustomerOrder>();
+            mockOrder.SetupGet(o => o.Products).Returns(new[] { product });
+            mockOrder.SetupGet(o => o.Currency).Returns(Currency.CHF);
+
+            var pricedOrder = _priceUnderTest.Price(mockOrder.Object);
+            Assert.AreEqual(GetPrice(9.8m * 3, Currency.CHF), pricedOrder.GetProductPrice(product).NetPrice);
+
+            mockOrder.SetupGet(o => o.Currency).Returns(Currency.GBP);
+            pricedOrder = _priceUnderTest.Price(mockOrder.Object);
+            Assert.AreEqual(GetPrice(1.2m * 3), pricedOrder.GetProductPrice(product).NetPrice);        
+        }
+
+        private Money GetPrice(decimal price, Currency currency = Currency.GBP)
+        {
+            return new Money(currency, price);
         }
 
         private IEnumerable<IProduct> SetupProducts(IList<decimal> prices, decimal quantityInOrder = 1m)
@@ -102,9 +125,9 @@
             return productMock;
         }
 
-        private static QuantityPrice GetQuantityPrice(decimal price)
+        private static QuantityPrice GetQuantityPrice(decimal price, Currency currency = Currency.GBP)
         {
-            return new QuantityPrice(new Money(Currency.GBP, price), 1);
+            return new QuantityPrice(new Money(currency, price), 1);
         }
     }
 }

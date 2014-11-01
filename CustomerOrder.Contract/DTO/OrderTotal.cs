@@ -13,6 +13,10 @@
         }
         [JsonProperty(PropertyName = "net")]
         public Money Net { get { return new Money(_order.NetTotal); } }
+        [JsonProperty(PropertyName = "due")]
+        public Money Due { get { return new Money(_order.AmountDue); } }
+        [JsonProperty(PropertyName = "paid")]
+        public Money Paid { get { return new Money(_order.AmountPaid); } }
 
     }
 }

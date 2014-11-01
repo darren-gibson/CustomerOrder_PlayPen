@@ -15,7 +15,7 @@
         public void SetUp()
         {
             _customerOrderFactoryMock = new Mock<ICustomerOrderFactory>();
-            _repositoryUnderTest = new InMemoryCustomerOrderRepository(_customerOrderFactoryMock.Object);
+            _repositoryUnderTest = new InMemoryCustomerOrderRepository(_customerOrderFactoryMock.Object, Currency.CHF);
         }
 
         [Test]
@@ -23,7 +23,7 @@
         {
             var expectedOrder = new Mock<ICustomerOrder>().Object;
             OrderIdentifier orderIdentifier = Guid.NewGuid();
-            _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier)).Returns(expectedOrder);
+            _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier, Currency.CHF)).Returns(expectedOrder);
 
             var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);
             Assert.AreSame(expectedOrder, actualOrder);
@@ -33,7 +33,7 @@
         public void ReturnTheSameOrderIfTheSpecifiedOrderIdentifierIsUsedAgain()
         {
             OrderIdentifier orderIdentifier = Guid.NewGuid();
-            _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier)).Returns(() => new Mock<ICustomerOrder>().Object);
+            _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier, Currency.CHF)).Returns(() => new Mock<ICustomerOrder>().Object);
 
             var expectedOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);
             var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);

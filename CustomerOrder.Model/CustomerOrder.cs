@@ -10,14 +10,15 @@
         private readonly IPrice _priceGateway;
         private readonly List<IEvent> _events;
         private IPricedOrder _pricedOrder;
-        internal CustomerOrder(OrderIdentifier identifier, IPrice priceGateway)
-            : this(identifier, priceGateway, new IEvent[] { }, null) { }
+        internal CustomerOrder(OrderIdentifier identifier, Currency currency, IPrice priceGateway)
+            : this(identifier, currency, priceGateway, new IEvent[] { }, null) { }
 
         // ReSharper disable once TooManyDependencies : This is an aggregate root, hence a lot of dependencies.
-        internal CustomerOrder(OrderIdentifier orderIdentifier, IPrice priceGateway, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
+        internal CustomerOrder(OrderIdentifier orderIdentifier, Currency currency, IPrice priceGateway, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
         {
             _priceGateway = priceGateway;
             Id = orderIdentifier;
+            Currency = currency;
             _pricedOrder = pricedOrder;
             _events = new List<IEvent>(events);
             if (_pricedOrder == null)
@@ -25,6 +26,7 @@
         }
 
         public OrderIdentifier Id { get; private set; }
+        public Currency Currency { get; private set; }
 
         public ProductAdded ProductAdd(ProductIdentifier productIdentifier, Quantity requiredQuantity)
         {
@@ -36,8 +38,15 @@
 
         public PaymentAdded PaymentAdd(Tender amount)
         {
+            EnsureCurrencyIsValid(amount.Amount);
             CreatePaymentEvent(amount);
             return new PaymentAdded(amount);
+        }
+
+        private void EnsureCurrencyIsValid(Money amount)
+        {
+            if(amount.Code != Currency)
+                throw new CurrencyDoesNotMatchOrderException(Currency, amount.Code);
         }
 
         private void CreatePaymentEvent(Tender amount)
@@ -89,6 +98,9 @@
         } 
 
         public IEnumerable<IPayment> Payments { get { return _events.Where(e => e is IPayment).Cast<IPayment>(); } }
+
+        public Money AmountDue { get { return NetTotal - AmountPaid;} }
+        public Money AmountPaid { get { return Payments.Aggregate(new Money(Currency, 0m), (current, payment) => current + payment.Amount.Amount); } }
 
         public event EventHandler<ProductAddedEventArgs> ProductAdded;
         public event EventHandler<OrderPricedEventArgs> OrderPriced;

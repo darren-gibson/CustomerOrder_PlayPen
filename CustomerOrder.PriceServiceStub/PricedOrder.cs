@@ -7,10 +7,12 @@ namespace CustomerOrder.PriceServiceStub
     internal class PricedOrder : IPricedOrder
     {
         private readonly Dictionary<IProduct, PricedProduct> _productPrices;
+        private readonly Currency _baseCurrency;
 
-        public PricedOrder(Dictionary<IProduct, PricedProduct> productPrices)
+        public PricedOrder(Dictionary<IProduct, PricedProduct> productPrices, Currency baseCurrency)
         {
             _productPrices = productPrices;
+            _baseCurrency = baseCurrency;
         }
 
         public IProductPrice GetProductPrice(IProduct productEntryToGetPriceFor)
@@ -22,10 +24,7 @@ namespace CustomerOrder.PriceServiceStub
         {
             get
             {
-                if(_productPrices.Count == 0)
-                    return new Money(Currency.GBP, 0);  // TODO: Where does the currency code come from?
-                var result = new Money(_productPrices.First().Value.NetPrice.Code, 0m);
-                return _productPrices.Aggregate(result, (current, pricedProduct) => current + pricedProduct.Value.NetPrice);
+                return _productPrices.Aggregate(new Money(_baseCurrency, 0), (current, pricedProduct) => current + pricedProduct.Value.NetPrice);
             }
         }
     }

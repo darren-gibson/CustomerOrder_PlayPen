@@ -19,11 +19,11 @@
             var customerOrderFactoryMock = new Mock<ICustomerOrderFactory>();
             var factory = new EventRasingCustomerOrderFactory(customerOrderFactoryMock.Object);
             _customerOrderDouble = new CustomerOrderDouble();
-            customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(identifier)).Returns(_customerOrderDouble);
+            customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(identifier, Currency.AUD)).Returns(_customerOrderDouble);
             _repositoryMock = new Mock<IAtomEventRepository>();
             // ReSharper disable once ObjectCreationAsStatement - required for the test
             new CustomerOrderBasedEventPublisher(factory, _repositoryMock.Object);
-            factory.MakeCustomerOrder(identifier);
+            factory.MakeCustomerOrder(identifier, Currency.AUD);
         }
 
         #region ProductAdded Event

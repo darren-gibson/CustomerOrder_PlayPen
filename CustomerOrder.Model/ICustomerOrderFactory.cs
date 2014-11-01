@@ -5,7 +5,7 @@
 
     public interface ICustomerOrderFactory
     {
-        ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier);
-        ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, IEnumerable<IEvent> events, IPricedOrder pricedOrder);
+        ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, Currency currency);
+        ICustomerOrder MakeCustomerOrder(OrderIdentifier orderIdentifier, Currency currency, IEnumerable<IEvent> events, IPricedOrder pricedOrder);
     }
 }

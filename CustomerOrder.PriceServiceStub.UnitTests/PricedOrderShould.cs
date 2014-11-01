@@ -7,14 +7,32 @@
     [TestFixture]
     public class PricedOrderShould
     {
+        private IPricedOrder _pricedOrderUnderTest;
+        private Mock<ICustomerOrder> _customerOrderMock;
+        private SimplePriceGateway _priceGateway;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _priceGateway = new SimplePriceGateway();
+            _customerOrderMock = new Mock<ICustomerOrder>();
+            _customerOrderMock.SetupGet(o => o.Currency).Returns(Currency.GBP);
+        }
+
         [Test]
         public void PriceAnOrderWithNoProductsInIt()
         {
-            var priceGateway = new SimplePriceGateway();
-            var customerOrderMock = new Mock<ICustomerOrder>();
-            var pricedOrderUnderTest = priceGateway.Price(customerOrderMock.Object);
+            _pricedOrderUnderTest = _priceGateway.Price(_customerOrderMock.Object);
+            Assert.AreEqual(new Money(Currency.GBP, 0), _pricedOrderUnderTest.NetTotal);
+        }
 
-            Assert.AreEqual(new Money(Currency.GBP, 0), pricedOrderUnderTest.NetTotal);
+        [Test]
+        public void BeInTheSameCurrencyAsTheOrder()
+        {
+            _customerOrderMock.SetupGet(o => o.Currency).Returns(Currency.INR);
+            _pricedOrderUnderTest = _priceGateway.Price(_customerOrderMock.Object);
+
+            Assert.AreEqual(new Money(Currency.INR, 0), _pricedOrderUnderTest.NetTotal);
         }
     }
 }

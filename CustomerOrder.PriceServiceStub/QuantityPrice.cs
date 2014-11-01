@@ -14,6 +14,8 @@
             _quantity = quantity;
         }
 
+        public Currency Currency { get { return _price.Code; } }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;

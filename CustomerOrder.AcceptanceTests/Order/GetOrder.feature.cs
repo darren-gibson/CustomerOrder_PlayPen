@@ -225,7 +225,39 @@ this.FeatureBackground();
 #line 49
  testRunner.Then("the result should be an HTTP 200 OK Status", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 50
- testRunner.And("the order should have a netTotal of 7.26 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("the order should have a total.net of 7.26 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("The amount due for an order is reduced by the total amount paid")]
+        public virtual void TheAmountDueForAnOrderIsReducedByTheTotalAmountPaid()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The amount due for an order is reduced by the total amount paid", ((string[])(null)));
+#line 52
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 53
+ testRunner.When("I add a Product to the order by calling POST /orders/{orderNo}/productadd with a " +
+                    "ProductID of \"5053947861260\" with a Quantity of \"3 Each\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 54
+ testRunner.And("I add a Product to the order by calling POST /orders/{orderNo}/productadd with a " +
+                    "ProductID of \"5000157024671\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 55
+ testRunner.And("I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tend" +
+                    "er type of CASH and an amount of 2.25 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 56
+ testRunner.When("I GET /orders/{orderNo} with an accept header of application/json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 57
+ testRunner.Then("the result should be an HTTP 200 OK Status", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 58
+ testRunner.And("the order should have a total.net of 10.55 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 59
+ testRunner.And("the order should have a total.paid of 2.25 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 60
+ testRunner.And("the order should have a total.due of 8.30 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

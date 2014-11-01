@@ -7,6 +7,7 @@
     class CustomerOrderBaseDouble : ICustomerOrder
     {
         public OrderIdentifier Id { get; private set; }
+        public Currency Currency { get; private set; }
 
 
         public virtual ProductAdded ProductAdd(ProductIdentifier productIdentifier, Quantity requiredQuantity)
@@ -29,6 +30,8 @@
             get { throw new NotImplementedException(); }
         }
 
+        public Money AmountDue { get { throw new NotImplementedException(); } }
+        public Money AmountPaid { get; private set; }
         public event EventHandler<ProductAddedEventArgs> ProductAdded;
         public event EventHandler<OrderPricedEventArgs> OrderPriced;
 

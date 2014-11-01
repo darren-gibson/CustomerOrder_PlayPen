@@ -8,6 +8,13 @@
     public class QuantityPriceShould
     {
         [Test]
+        public void SetTheCurrencyFromTheConstructor()
+        {
+            var q1 = new QuantityPrice(new Money(Currency.AUD, 10), new Quantity(1, UnitOfMeasure.Each));
+            Assert.AreEqual(Currency.AUD, q1.Currency);
+        }
+
+        [Test]
         public void MoneyCreatedAtDifferentTimesSShouldCompareEqualUsingTheEqualsMethod()
         {
             var m1 = new Money(Currency.USD, 10);
