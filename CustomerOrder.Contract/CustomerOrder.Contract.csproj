@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="DTO\CustomerOrder.cs" />
     <Compile Include="DTO\OrderTotal.cs" />
+    <Compile Include="DTO\Payment.cs" />
     <Compile Include="DTO\PaymentAdded.cs" />
     <Compile Include="DTO\Money.cs" />
     <Compile Include="DTO\Product.cs" />

@@ -58,3 +58,14 @@ Scenario: The amount due for an order is reduced by the total amount paid
 	And the order should have a total.net of 10.55 GBP
 	And the order should have a total.paid of 2.25 GBP
 	And the order should have a total.due of 8.30 GBP
+
+Scenario: When I get the order the individual payments are available in it
+	When I add a Product to the order by calling POST /orders/{orderNo}/productadd with a ProductID of "5053947861260" with a Quantity of "3 Each"
+	And I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tender type of CASH and an amount of 2.25 GBP
+	And I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tender type of VISA and an amount of 4.00 GBP
+	When I GET /orders/{orderNo} with an accept header of application/json
+	Then the result should be an HTTP 200 OK Status
+	And the order should contain the following payments:
+	| Tender Type | Amount   |
+	| CASH        | 2.25 GBP |
+	| VISA        | 4.00 GBP |

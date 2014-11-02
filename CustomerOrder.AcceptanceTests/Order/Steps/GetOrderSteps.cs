@@ -87,7 +87,7 @@
 
                 var product = products.FirstOrDefault(p => p.ProductId.Equals(expectedProduct));
 
-                Assert.NotNull(product, string.Format("Expected Products to collection contain {0}", expectedProduct));
+                Assert.NotNull(product, string.Format("Expected Products collection to contain {0}", expectedProduct));
                 Assert.NotNull(product.Quantity, "Quantity expected");
                 Assert.AreEqual(expectedQuantity.Amount, product.Quantity.Amount);
                 Assert.AreEqual(expectedQuantity.UOM, product.Quantity.UOM);
@@ -141,6 +141,23 @@
             var content = Result.Content;
             var jsonContent = content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<CustomerOrder>(jsonContent);
+        }
+
+        [Then(@"the order should contain the following payments:")]
+        public void ThenTheOrderShouldContainThePayments(Table table)
+        {
+            var payments = GetOrderFromResult().Payments;
+            Assert.NotNull(payments, "Payments collection expected");
+            foreach (var tableRow in table.Rows)
+            {
+                var expectedTenderType = tableRow["Tender Type"];
+
+                var payment = payments.FirstOrDefault(p => p.TenderType.Equals(expectedTenderType));
+
+                Assert.NotNull(payment, string.Format("Expected Payments to contain a {0} tender type", expectedTenderType));
+                Assert.NotNull(payment.Amount, "Amount expected");
+                AssertMoneyEqual(tableRow["Amount"], payment.Amount);
+            }
         }
     }
 }

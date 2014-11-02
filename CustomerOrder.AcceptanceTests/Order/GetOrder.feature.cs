@@ -261,6 +261,44 @@ this.FeatureBackground();
 #line hidden
             this.ScenarioCleanup();
         }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("When I get the order the individual payments are available in it")]
+        public virtual void WhenIGetTheOrderTheIndividualPaymentsAreAvailableInIt()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("When I get the order the individual payments are available in it", ((string[])(null)));
+#line 62
+this.ScenarioSetup(scenarioInfo);
+#line 7
+this.FeatureBackground();
+#line 63
+ testRunner.When("I add a Product to the order by calling POST /orders/{orderNo}/productadd with a " +
+                    "ProductID of \"5053947861260\" with a Quantity of \"3 Each\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 64
+ testRunner.And("I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tend" +
+                    "er type of CASH and an amount of 2.25 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 65
+ testRunner.And("I add a Payment to an order by calling PUT /orders/{orderNo}/payments with a tend" +
+                    "er type of VISA and an amount of 4.00 GBP", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 66
+ testRunner.When("I GET /orders/{orderNo} with an accept header of application/json", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 67
+ testRunner.Then("the result should be an HTTP 200 OK Status", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Tender Type",
+                        "Amount"});
+            table5.AddRow(new string[] {
+                        "CASH",
+                        "2.25 GBP"});
+            table5.AddRow(new string[] {
+                        "VISA",
+                        "4.00 GBP"});
+#line 68
+ testRunner.And("the order should contain the following payments:", ((string)(null)), table5, "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
     }
 }
 #pragma warning restore
