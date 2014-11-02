@@ -1,11 +1,13 @@
 ﻿namespace CustomerOrder.Model.UnitTests
 {
     using System;
+    using System.Linq;
+    using Model.Events;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class CustomerOrderShould
+    public class CustomerOrderGetProductPriceShould
     {
         private ICustomerOrder _orderUnderTest;
         private CustomerOrderFactory _factory;
@@ -23,33 +25,27 @@
             _orderUnderTest = _factory.MakeCustomerOrder(orderIdentifier, Currency.NZD);
         }
 
-        #region Construction
-        [Test]
-        public void ImplementICustomerOrder()
-        {
-            Assert.IsInstanceOf(typeof(ICustomerOrder), _orderUnderTest);
-        }
-        #endregion
+        #region GetProductPrice
 
-        #region Id
         [Test]
-        public void ReturnTheCustomerOrderIdThatWasPassedInOnTheConstructor()
+        public void ReturnTheResultFromThePricedBasket()
         {
             ICustomerOrderFactory factory = new CustomerOrderFactory(_priceMock.Object);
-            OrderIdentifier expectedId = Guid.NewGuid();
-            _orderUnderTest = factory.MakeCustomerOrder(expectedId, Currency.INR);
+            var productAddedEvent = new ProductAddedEvent(Guid.NewGuid(), Quantity.Default);
+            _orderUnderTest = factory.MakeCustomerOrder(Guid.NewGuid(), Currency.CAD, new IEvent[] { productAddedEvent }, _pricedOrderMock.Object);
+            var expectedPrice = CreateProductPrice();
+            _pricedOrderMock.Setup(o => o.GetProductPrice(productAddedEvent)).Returns(expectedPrice);
 
-            Assert.AreEqual(expectedId, _orderUnderTest.Id);
+            var actualPrice = _orderUnderTest.GetProductPrice(_orderUnderTest.Products.First());
+
+            Assert.AreEqual(expectedPrice, actualPrice);
         }
 
-        [Test]
-        public void ReturnsTheCurrencyThatWasPassedInTheConstructor()
+        private IProductPrice CreateProductPrice()
         {
-            ICustomerOrderFactory factory = new CustomerOrderFactory(_priceMock.Object);
-            _orderUnderTest = factory.MakeCustomerOrder(Guid.NewGuid(), Currency.INR);
-
-            Assert.AreEqual(Currency.INR, _orderUnderTest.Currency);
+            return new Mock<IProductPrice>().Object;
         }
+
         #endregion
     }
 }
