@@ -61,6 +61,18 @@
             return new Money(left.Code, left._amount / right);
         }
 
+        public static bool operator >(Money left, Money right)
+        {
+            EnsureCurrencyIsConvertable(left.Code, right.Code);
+            return left._amount > right._amount;
+        }
+
+        public static bool operator <(Money left, Money right)
+        {
+            EnsureCurrencyIsConvertable(left.Code, right.Code);
+            return left._amount < right._amount;
+        }
+
         private static void EnsureCurrencyIsConvertable(Currency fromCurrency, Currency toCurrency)
         {
             if (fromCurrency != toCurrency)

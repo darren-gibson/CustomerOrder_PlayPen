@@ -150,6 +150,70 @@
 
         #endregion
 
+        #region Greater Than
+
+        [Test]
+        public void SupportGreaterThan()
+        {
+            var m1 = new Money(Currency.CHF, 10);
+            var m2 = new Money(Currency.CHF, 2);
+
+            Assert.IsTrue(m1 > m2);
+            Assert.IsFalse(m2 > m1);
+        }
+
+        [Test]
+        public void OnlyAllowGreaterThanWhenCurrenciesMatch()
+        {
+            var m1 = new Money(Currency.CHF, 10);
+            var m2 = new Money(Currency.NZD, 2);
+
+            // ReSharper disable once UnusedVariable
+            Assert.Throws<UnableToConvertCurrencyException>(() => { var notUsed = m1 > m2; });
+        }
+
+        [Test]
+        public void NotBeGreaterThanWhenAreEqual()
+        {
+            var m1 = new Money(Currency.CHF, 10);
+            var m2 = new Money(Currency.CHF, 10);
+            Assert.IsFalse(m1 > m2);
+        }
+
+        #endregion
+
+        #region Less Than
+
+        [Test]
+        public void SupportLessThan()
+        {
+            var m1 = new Money(Currency.CHF, 5);
+            var m2 = new Money(Currency.CHF, 5.1m);
+
+            Assert.IsTrue(m1 < m2);
+            Assert.IsFalse(m2 < m1);
+        }
+
+        [Test]
+        public void OnlyAllowLessThanWhenCurrenciesMatch()
+        {
+            var m1 = new Money(Currency.CHF, 10);
+            var m2 = new Money(Currency.NZD, 2);
+
+            // ReSharper disable once UnusedVariable
+            Assert.Throws<UnableToConvertCurrencyException>(() => { var notUsed = m1 < m2; });
+        }
+
+        [Test]
+        public void NotBeLessThanWhenAreEqual()
+        {
+            var m1 = new Money(Currency.CHF, 10);
+            var m2 = new Money(Currency.CHF, 10);
+            Assert.IsFalse(m1 < m2);
+        }
+
+        #endregion
+
         #region ToString()
 
         [Test]
