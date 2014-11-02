@@ -6,24 +6,8 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class CustomerOrderProductAddShould
+    public class CustomerOrderProductAddShould : CustomerOrderSetupShould
     {
-        private ICustomerOrder _orderUnderTest;
-        private CustomerOrderFactory _factory;
-        private Mock<IPrice> _priceMock;
-        private Mock<IPricedOrder> _pricedOrderMock;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _priceMock = new Mock<IPrice>();
-            _factory = new CustomerOrderFactory(_priceMock.Object);
-            _pricedOrderMock = new Mock<IPricedOrder>();
-            OrderIdentifier orderIdentifier = Guid.NewGuid();
-            _priceMock.Setup(p => p.Price(It.Is<ICustomerOrder>(o => o.Id.Equals(orderIdentifier)))).Returns(_pricedOrderMock.Object);
-            _orderUnderTest = _factory.MakeCustomerOrder(orderIdentifier, Currency.NZD);
-        }
-
         #region ProductAdd
         [Test]
         public void AddTheProductToTheOrderWhenTheProductAddIsCalled()
