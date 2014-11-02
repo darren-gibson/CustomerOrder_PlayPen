@@ -39,6 +39,8 @@
         public PaymentAdded PaymentAdd(Tender amount)
         {
             EnsureCurrencyIsValid(amount.Amount);
+            if(amount.Amount > AmountDue)
+                throw new PaymentExceededAmountDueException(amount.Amount, AmountDue);
             CreatePaymentEvent(amount);
             return new PaymentAdded(amount);
         }

@@ -55,6 +55,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerOrder.ProductServic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerOrder.FitNesse.AcceptanceTests", "CustomerOrder.FitNesse.AcceptanceTests\CustomerOrder.FitNesse.AcceptanceTests.csproj", "{09F977F2-87E3-4125-B0A3-FD0DA1EDD4CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CAAB3530-A9E1-4701-80B0-683242C94281}"
+	ProjectSection(SolutionItems) = preProject
+		Custiomer Order States.uxf = Custiomer Order States.uxf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

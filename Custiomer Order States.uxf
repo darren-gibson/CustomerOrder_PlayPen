@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.custom.InitialState</type>
+    <coordinates>
+      <x>20</x>
+      <y>160</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>0</x>
+      <y>120</y>
+      <w>150</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;- 
+Open</panel_attributes>
+    <additional_attributes>130;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>280</x>
+      <y>110</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Product Added</panel_attributes>
+    <additional_attributes>180;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>570</x>
+      <y>0</y>
+      <w>200</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Product Added</panel_attributes>
+    <additional_attributes>30;110;30;50;130;50;130;130;70;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>440</x>
+      <y>190</y>
+      <w>122</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Commited</panel_attributes>
+    <additional_attributes>70;190;70;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>460</x>
+      <y>110</y>
+      <w>180</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Shopping
+--
+Add Product
+Commit
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>130</x>
+      <y>110</y>
+      <w>180</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Empty
+--
+Add Product
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>460</x>
+      <y>380</y>
+      <w>180</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Commited
+--
+Pay
+Uncommit
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>520</x>
+      <y>190</y>
+      <w>136</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Uncommited</panel_attributes>
+    <additional_attributes>70;30;70;190</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>830</x>
+      <y>380</y>
+      <w>180</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>Paying
+--
+Pay
+Cancel Payment
+-.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>950</x>
+      <y>270</y>
+      <w>208</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Payment received
+[Balance&gt;0]</panel_attributes>
+    <additional_attributes>30;110;30;50;130;50;130;130;60;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>360</y>
+      <w>240</w>
+      <h>94</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Payment received
+[Balance&gt;0]</panel_attributes>
+    <additional_attributes>220;50;30;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.FinalState</type>
+    <coordinates>
+      <x>920</x>
+      <y>620</y>
+      <w>20</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>Closed</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>840</x>
+      <y>460</y>
+      <w>168</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Payment received
+[Balance == 0]</panel_attributes>
+    <additional_attributes>90;160;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>460</x>
+      <y>460</y>
+      <w>480</w>
+      <h>214</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Payment received
+[Balance == 0]</panel_attributes>
+    <additional_attributes>460;170;90;170;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>610</x>
+      <y>410</y>
+      <w>240</w>
+      <h>94</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Payment cancelled
+[Payments.Count == 0]</panel_attributes>
+    <additional_attributes>30;50;220;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>90</x>
+      <y>390</y>
+      <w>280</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Commitment secures any offers that has 
+been made to the customer, which in turn 
+may burn some of the customers stored 
+value.
+Uncommit reverts this.
+Charges associated with an payment are
+a payment concern and do not affect the
+order.  
+Promotions associated with an 
+order are only permitted to reduce the 
+price of the order.  Anything increasing 
+the order must require the order to be  
+forced back to an uncommited state.
+bg=yellow
+fg=black</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

@@ -70,6 +70,7 @@
     <Compile Include="Events\ProductAddedEvent.cs" />
     <Compile Include="OrderPricedEventArgs.cs" />
     <Compile Include="Events\PaymentEvent.cs" />
+    <Compile Include="PaymentExceededAmountDueException.cs" />
     <Compile Include="Tender.cs" />
     <Compile Include="PaymentAdded.cs" />
     <Compile Include="ProductAdded.cs" />

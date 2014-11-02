@@ -169,6 +169,7 @@
         [Test]
         public void AddThePaymentToTheOrderWhenThePaymentAddIsCalled()
         {
+            _pricedOrderMock.SetupGet(o => o.NetTotal).Returns(new Money(_orderUnderTest.Currency, 200m));
             var expectedTender = CreateCashTender(102.3m, _orderUnderTest.Currency);
             _orderUnderTest.PaymentAdd(expectedTender);
 
@@ -178,6 +179,7 @@
         [Test]
         public void ReturnAPaymentAddedType()
         {
+            _pricedOrderMock.SetupGet(o => o.NetTotal).Returns(new Money(_orderUnderTest.Currency, 200m));
             var expectedTender = CreateCashTender(102.3m, _orderUnderTest.Currency);
             var paymentAdded = _orderUnderTest.PaymentAdd(expectedTender);
 
@@ -191,6 +193,40 @@
             Assert.Throws<CurrencyDoesNotMatchOrderException>(
                 () => _orderUnderTest.PaymentAdd(tenderThatUsesADifferentCurrencyThanTheOrder));
         }
+
+        [Test]
+        public void ThrowAnExceptionIfAnAttemptIsMadeToOverTender()
+        {
+            _pricedOrderMock.SetupGet(o => o.NetTotal).Returns(new Money(_orderUnderTest.Currency, 0));
+            var amountGreaterThanOrderAmountDue = CreateCashTender(10m, _orderUnderTest.Currency);
+            Assert.Throws<PaymentExceededAmountDueException>(() => _orderUnderTest.PaymentAdd(amountGreaterThanOrderAmountDue));            
+        }
+
+        [Test]
+        public void IncludeTheAmountDueInTheException()
+        {
+            var expectedAmountDue = new Money(_orderUnderTest.Currency, 2.34m);
+            _pricedOrderMock.SetupGet(o => o.NetTotal).Returns(expectedAmountDue);
+            try
+            {
+                _orderUnderTest.PaymentAdd(CreateCashTender(100m, _orderUnderTest.Currency));
+            }
+            catch (PaymentExceededAmountDueException e)
+            {
+                Assert.AreEqual(expectedAmountDue, e.AmountDue);
+            }            
+        }
+
+        [Test]
+        public void AllowsAPaymentUptoTheFullAmount() 
+        {
+            _pricedOrderMock.SetupGet(o => o.NetTotal).Returns(new Money(_orderUnderTest.Currency, 102.25m));
+            _orderUnderTest.PaymentAdd(CreateCashTender(50m, _orderUnderTest.Currency));
+            _orderUnderTest.PaymentAdd(CreateCashTender(50m, _orderUnderTest.Currency));
+            Assert.Throws<PaymentExceededAmountDueException>(() => _orderUnderTest.PaymentAdd(CreateCashTender(2.26m, _orderUnderTest.Currency)));
+            _orderUnderTest.PaymentAdd(CreateCashTender(2.25m, _orderUnderTest.Currency));
+        }
+
         #endregion
 
         #region GetProductPrice

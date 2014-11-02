@@ -49,6 +49,7 @@
                     new KeyValuePair<Type, IResultSerializer>(typeof (ProductAdded), new ResultSerializer<ProductAdded, Contract.DTO.ProductAdded>()),
                     new KeyValuePair<Type, IResultSerializer>(typeof (ProductNotFoundException), new ResultSerializer<ProductNotFoundException, Contract.DTO.ProductNotFoundException>()),
                     new KeyValuePair<Type, IResultSerializer>(typeof (PaymentAdded), new ResultSerializer<PaymentAdded, Contract.DTO.PaymentAdded>()),
+                    new KeyValuePair<Type, IResultSerializer>(typeof (PaymentExceededAmountDueException), new ResultSerializer<PaymentExceededAmountDueException, Contract.DTO.PaymentExceededAmountDueException>()),
                 });
         }
 

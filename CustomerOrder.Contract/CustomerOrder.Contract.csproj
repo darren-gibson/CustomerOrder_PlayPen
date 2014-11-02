@@ -43,6 +43,7 @@
     <Compile Include="DTO\Payment.cs" />
     <Compile Include="DTO\PaymentAdded.cs" />
     <Compile Include="DTO\Money.cs" />
+    <Compile Include="DTO\PaymentExceededAmountDueException.cs" />
     <Compile Include="DTO\Product.cs" />
     <Compile Include="DTO\PaymentAdd.cs" />
     <Compile Include="DTO\ProductAdd.cs" />

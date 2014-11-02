@@ -81,6 +81,7 @@
     <Compile Include="Contract\Payment.cs" />
     <Compile Include="Contract\PaymentAdded.cs" />
     <Compile Include="Contract\Money.cs" />
+    <Compile Include="Contract\PaymentExceededAmountDueException.cs" />
     <Compile Include="Contract\ProductAdded.cs" />
     <Compile Include="ProductAdd\AddProductAtomEvents.feature.cs">
       <DependentUpon>AddProductAtomEvents.feature</DependentUpon>

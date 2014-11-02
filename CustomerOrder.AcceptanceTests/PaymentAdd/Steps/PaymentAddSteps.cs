@@ -12,7 +12,7 @@
 
     [Binding]
     [Scope(Feature = "Payment Add")]
-    public class TenderAddSteps : FeatureBase
+    public class PaymentAddSteps : FeatureBase
     {
         [Given(@"I have a unique order number (.*)")]
         public void GivenIHaveAUniqueOrderNumber(string token)
@@ -21,6 +21,20 @@
             // TODO: this should not include a colon, the format is not a valid URL
             OrderNumber = string.Format("trn:tesco:order:uuid:{0}", Guid.NewGuid());
             Client = new CustomerOrderHttpClient();
+        }
+
+        [Given(@"the following products are know to the Price Service:")]
+        public void GivenTheFollowingProductsAreKnowToThePriceService(Table table)
+        {
+            var priceSetup = new PriceSetup();
+            priceSetup.Setup(table);
+        }
+
+        [Given(@"I add a Product to the order by calling POST (.*) with a ProductID of ""(\d+)"" with a Quantity of ""(.*) (.*)""")]
+        public void WhenIAddAProductToANewOrderByCallingPostWithAProductId(string url, string productId, decimal amount, UnitOfMeasure unitOfMeasure)
+        {
+            var quantity = new Model.Quantity(amount, unitOfMeasure);
+            Result = Client.ProductAdd(ReplaceTokensInString(url), productId, quantity);
         }
 
         [When(@"I add a Payment to an order by calling PUT (.*) with a tender type of (.*) and an amount of (.*) (.{3})")]
@@ -63,9 +77,6 @@
 
                 switch (name)
                 {
-                    case "Content-Type":
-                        Assert.AreEqual(expectedValue, Result.Content.Headers.ContentType.MediaType);
-                        break;
                     case "tenderType":
                         Assert.AreEqual(expectedValue, paymentAdded.TenderType);
                         break;
@@ -84,5 +95,32 @@
             return JsonConvert.DeserializeObject<Contract.PaymentAdded>(result.Content.ReadAsStringAsync().Result);
         }
 
+        [Then(@"the result should have a Content-Type of '(.*)'")]
+        public void ThenTheResultShouldHaveAContent_TypeOf(string expectedContentType)
+        {
+            Assert.AreEqual(expectedContentType, Result.Content.Headers.ContentType.MediaType);
+        }
+
+        [Then(@"the PaymentExceededAmountDueException should contain:")]
+        public void ThenThePaymentExceededAmountDueExceptionShouldContain(Table table)
+        {
+            var paymentExceededAmountDueException = JsonConvert.DeserializeObject<Contract.PaymentExceededAmountDueException>(Result.Content.ReadAsStringAsync().Result);
+
+            foreach (var tableRow in table.Rows)
+            {
+                var name = tableRow["Name"];
+                var expectedValue = ReplaceTokensInString(tableRow["Value"]);
+
+                switch (name)
+                {
+                    case "amountDue":
+                        AssertMoneyEqual(expectedValue, paymentExceededAmountDueException.AmountDue);
+                        break;
+                    default:
+                        Assert.Fail("Unknown field: {0}", name);
+                        break;
+                }
+            }
+        }
     }
 }
