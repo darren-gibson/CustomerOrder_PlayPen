@@ -60,6 +60,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Custiomer Order States.uxf = Custiomer Order States.uxf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerOrder.Infrastructure.UnitTests", "CustomerOrder.Infrastructure.UnitTests\CustomerOrder.Infrastructure.UnitTests.csproj", "{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +120,10 @@ Global
 		{09F977F2-87E3-4125-B0A3-FD0DA1EDD4CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09F977F2-87E3-4125-B0A3-FD0DA1EDD4CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09F977F2-87E3-4125-B0A3-FD0DA1EDD4CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,5 +135,6 @@ Global
 		{41D0DFDD-4107-45F5-BE54-5EE58DB3E001} = {1FC21E15-947D-4354-B0FE-914EE104A64B}
 		{6441AEC0-A290-4124-B022-B97AA1F4111A} = {1FC21E15-947D-4354-B0FE-914EE104A64B}
 		{09F977F2-87E3-4125-B0A3-FD0DA1EDD4CD} = {1FC21E15-947D-4354-B0FE-914EE104A64B}
+		{15CD7887-B34C-4EA3-BBF8-4C40FDF8D9F3} = {1FC21E15-947D-4354-B0FE-914EE104A64B}
 	EndGlobalSection
 EndGlobal

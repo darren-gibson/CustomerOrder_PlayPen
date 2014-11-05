@@ -1,4 +1,4 @@
-﻿namespace CustomerOrder.Model
+﻿namespace CustomerOrder.Model.Order
 {
     using System.Collections.Generic;
     using Events;

@@ -13,5 +13,7 @@
         public List<Payment> Payments { get; set; }
         [JsonProperty(PropertyName = "total")]
         public OrderTotals Total { get; set; }
+        [JsonProperty(PropertyName = "status")]
+        public string Status { get; set; }
     }
 }

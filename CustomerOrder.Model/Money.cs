@@ -80,6 +80,8 @@
         }
 
         public Currency Code { get { return _currency; } }
+        public bool IsZero { get { return _amount.Equals(0); } }
+
         public string ToString(string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrEmpty(format))

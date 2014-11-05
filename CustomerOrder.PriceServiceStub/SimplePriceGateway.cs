@@ -45,7 +45,7 @@
             {
                 return _priceLookup[tuple];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ProductNotFoundException(product.ProductIdentifier);
             }

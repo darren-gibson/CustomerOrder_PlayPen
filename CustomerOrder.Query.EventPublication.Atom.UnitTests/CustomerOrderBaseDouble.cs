@@ -32,6 +32,7 @@
 
         public Money AmountDue { get { throw new NotImplementedException(); } }
         public Money AmountPaid { get; private set; }
+        public CustomerOrderStatus Status { get; private set; }
         public event EventHandler<ProductAddedEventArgs> ProductAdded;
         public event EventHandler<OrderPricedEventArgs> OrderPriced;
 

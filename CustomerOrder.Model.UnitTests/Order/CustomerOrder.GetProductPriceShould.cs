@@ -1,11 +1,11 @@
-﻿namespace CustomerOrder.Model.UnitTests
+﻿namespace CustomerOrder.Model.UnitTests.Order
 {
     using System;
     using System.Linq;
     using Model.Events;
+    using Model.Order;
     using Moq;
     using NUnit.Framework;
-    using Order;
 
     [TestFixture]
     public class CustomerOrderGetProductPriceShould : CustomerOrderSetupShould

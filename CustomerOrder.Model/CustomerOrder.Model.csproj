@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Stateless">
+      <HintPath>..\packages\stateless-4.0.2.3.1.1\lib\net40\Stateless.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,9 +53,10 @@
     <Compile Include="Command\SimpleCommandQueue.cs" />
     <Compile Include="Currency.cs" />
     <Compile Include="CurrencyDoesNotMatchOrderException.cs" />
-    <Compile Include="CustomerOrder.cs" />
-    <Compile Include="CustomerOrderFactory.cs" />
+    <Compile Include="Order\CustomerOrder.cs" />
+    <Compile Include="Order\CustomerOrderFactory.cs" />
     <Compile Include="CustomerOrderMadeEventArgs.cs" />
+    <Compile Include="CustomerOrderStatus.cs" />
     <Compile Include="EventRasingCustomerOrderFactory.cs" />
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\IEvent.cs" />
@@ -70,6 +74,11 @@
     <Compile Include="Events\ProductAddedEvent.cs" />
     <Compile Include="OrderPricedEventArgs.cs" />
     <Compile Include="Events\PaymentEvent.cs" />
+    <Compile Include="Order\CustomerOrderStateMachine.cs" />
+    <Compile Include="Order\Trigger.cs" />
+    <Compile Include="Order\ITrigger.cs" />
+    <Compile Include="Order\PaymentAddTrigger.cs" />
+    <Compile Include="Order\ProductAddTrigger.cs" />
     <Compile Include="PaymentExceededAmountDueException.cs" />
     <Compile Include="Tender.cs" />
     <Compile Include="PaymentAdded.cs" />
@@ -84,6 +93,9 @@
     <Compile Include="Repository\InMemoryCustomerOrderRepository.cs" />
     <Compile Include="UnableToConvertCurrencyException.cs" />
     <Compile Include="UnitOfMeasure.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

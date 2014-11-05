@@ -51,14 +51,17 @@ Product Added</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>440</x>
+      <x>340</x>
       <y>190</y>
-      <w>122</w>
+      <w>286</w>
       <h>210</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Commited</panel_attributes>
-    <additional_attributes>70;190;70;30</additional_attributes>
+Commited
+[(All items can be fullfilled) 
+and 
+(no outstanding Selling Restrictions)]</panel_attributes>
+    <additional_attributes>150;190;150;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.State</type>
@@ -83,7 +86,7 @@ Commit
       <w>180</w>
       <h>110</h>
     </coordinates>
-    <panel_attributes>Empty
+    <panel_attributes>Open
 --
 Add Product
 -.</panel_attributes>
@@ -107,7 +110,7 @@ Uncommit
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>520</x>
+      <x>550</x>
       <y>190</y>
       <w>136</w>
       <h>210</h>
@@ -134,34 +137,21 @@ Cancel Payment
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>950</x>
-      <y>270</y>
-      <w>208</w>
-      <h>150</h>
+      <x>840</x>
+      <y>460</y>
+      <w>168</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Payment received
-[Balance&gt;0]</panel_attributes>
-    <additional_attributes>30;110;30;50;130;50;130;130;60;130</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>610</x>
-      <y>360</y>
-      <w>240</w>
-      <h>94</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-Payment received
-[Balance&gt;0]</panel_attributes>
-    <additional_attributes>220;50;30;50</additional_attributes>
+</panel_attributes>
+    <additional_attributes>90;100;90;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.custom.FinalState</type>
     <coordinates>
-      <x>920</x>
-      <y>620</y>
+      <x>1390</x>
+      <y>660</y>
       <w>20</w>
       <h>20</h>
     </coordinates>
@@ -171,34 +161,33 @@ Payment received
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>840</x>
-      <y>460</y>
-      <w>168</w>
-      <h>180</h>
+      <x>850</x>
+      <y>570</y>
+      <w>310</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Payment received
 [Balance == 0]</panel_attributes>
-    <additional_attributes>90;160;90;30</additional_attributes>
+    <additional_attributes>290;100;80;100;80;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>460</x>
       <y>460</y>
-      <w>480</w>
-      <h>214</h>
+      <w>470</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Payment received
-[Balance == 0]</panel_attributes>
-    <additional_attributes>460;170;90;170;90;30</additional_attributes>
+</panel_attributes>
+    <additional_attributes>450;120;90;120;90;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>610</x>
-      <y>410</y>
+      <y>380</y>
       <w>240</w>
       <h>94</h>
     </coordinates>
@@ -231,5 +220,51 @@ forced back to an uncommited state.
 bg=yellow
 fg=black</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.Decision</type>
+    <coordinates>
+      <x>910</x>
+      <y>560</y>
+      <w>40</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>900</x>
+      <y>250</y>
+      <w>262</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+[Balance&gt;0]</panel_attributes>
+    <additional_attributes>30;130;30;50;200;50;200;330;50;330</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.State</type>
+    <coordinates>
+      <x>1140</x>
+      <y>650</y>
+      <w>90</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Complete</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1200</x>
+      <y>640</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+</panel_attributes>
+    <additional_attributes>190;30;30;30</additional_attributes>
   </element>
 </diagram>

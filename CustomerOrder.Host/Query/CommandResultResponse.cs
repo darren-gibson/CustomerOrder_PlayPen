@@ -8,7 +8,7 @@
         public CommandResultResponse(IResultSerializer serializer, object result)
         {
             Contents = stream => serializer.Serialize(ContentType, result, stream);
-            ContentType = string.Format("application/vnd.tesco.CustomerOrder.{0}+json", result.GetType().Name);
+            ContentType = string.Format("application/vnd.tesco.CustomerOrder.{0}+json", serializer.ContractType.Name);
         }
     }
 }

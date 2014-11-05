@@ -1,4 +1,4 @@
-﻿namespace CustomerOrder.Model
+﻿namespace CustomerOrder.Model.Order
 {
     using System;
     using System.Collections.Generic;
@@ -9,13 +9,17 @@
     {
         private readonly IPrice _priceGateway;
         private readonly List<IEvent> _events;
+        private readonly CustomerOrderStateMachine _orderStateMachine;
         private IPricedOrder _pricedOrder;
+
         internal CustomerOrder(OrderIdentifier identifier, Currency currency, IPrice priceGateway)
             : this(identifier, currency, priceGateway, new IEvent[] { }, null) { }
 
         // ReSharper disable once TooManyDependencies : This is an aggregate root, hence a lot of dependencies.
         internal CustomerOrder(OrderIdentifier orderIdentifier, Currency currency, IPrice priceGateway, IEnumerable<IEvent> events, IPricedOrder pricedOrder)
         {
+            _orderStateMachine = new CustomerOrderStateMachine(this);
+
             _priceGateway = priceGateway;
             Id = orderIdentifier;
             Currency = currency;
@@ -30,54 +34,25 @@
 
         public ProductAdded ProductAdd(ProductIdentifier productIdentifier, Quantity requiredQuantity)
         {
-            var productAdded = CreateProductAddedEvent(productIdentifier, requiredQuantity);
-            var pricedOrder = RepriceOrderAndGetProductPrice(productAdded);
-            OnProductAdded(new ProductAddedEventArgs(productAdded, pricedOrder));
-            return new ProductAdded(productAdded, GetProductPrice(productAdded));  
+            ITrigger<ProductAdded> trigger = new ProductAddTrigger(_events, productIdentifier, requiredQuantity, RepriceOrder, OnProductAdded);
+            return RunTrigger(trigger);
+        }
+
+        private T RunTrigger<T>(ITrigger<T> command)
+        {
+            if (_orderStateMachine.CanFire(command.TriggerType))
+            {
+                var result = command.Execute();
+                _orderStateMachine.Fire(command.TriggerType);
+                return result;
+            }
+            throw new InvalidOperationException(string.Format("Currently in State {0}, cannot Fire {1}", _orderStateMachine.State, command.TriggerType));
         }
 
         public PaymentAdded PaymentAdd(Tender amount)
         {
-            EnsureCurrencyIsValid(amount.Amount);
-            if(amount.Amount > AmountDue)
-                throw new PaymentExceededAmountDueException(amount.Amount, AmountDue);
-            CreatePaymentEvent(amount);
-            return new PaymentAdded(amount);
-        }
-
-        private void EnsureCurrencyIsValid(Money amount)
-        {
-            if(amount.Code != Currency)
-                throw new CurrencyDoesNotMatchOrderException(Currency, amount.Code);
-        }
-
-        private void CreatePaymentEvent(Tender amount)
-        {
-            _events.Add(new PaymentEvent(amount));
-        }
-
-        private IProductPrice RepriceOrderAndGetProductPrice(ProductAddedEvent productAdded)
-        {
-            try
-            {
-                return RepriceOrderAndGetProductUnitPrice(productAdded);
-            }
-            catch (Exception)
-            {
-                RemoveEvent(productAdded);
-                throw;
-            }
-        }
-
-        private void RemoveEvent(IEvent eventToRemove)
-        {
-            _events.Remove(eventToRemove);
-        }
-
-        private IProductPrice RepriceOrderAndGetProductUnitPrice(IProduct product)
-        {
-            var pricedOrder = RepriceOrder();
-            return pricedOrder.GetProductPrice(product);
+            var trigger = new PaymentAddTrigger(_events, amount, AmountDue);
+            return RunTrigger(trigger);
         }
 
         private IPricedOrder RepriceOrder()
@@ -85,13 +60,6 @@
             _pricedOrder = _priceGateway.Price(this);
             OnOrderPriced(new OrderPricedEventArgs(_pricedOrder));
             return _pricedOrder;
-        }
-
-        private ProductAddedEvent CreateProductAddedEvent(ProductIdentifier productIdentifier, Quantity requiredQuantity)
-        {
-            var productAdded = new ProductAddedEvent(productIdentifier, requiredQuantity);
-            _events.Add(productAdded);
-            return productAdded;
         }
 
         public IEnumerable<IProduct> Products
@@ -103,6 +71,7 @@
 
         public Money AmountDue { get { return NetTotal - AmountPaid;} }
         public Money AmountPaid { get { return Payments.Aggregate(new Money(Currency, 0m), (current, payment) => current + payment.Amount.Amount); } }
+        public CustomerOrderStatus Status { get { return _orderStateMachine.State; } }
 
         public event EventHandler<ProductAddedEventArgs> ProductAdded;
         public event EventHandler<OrderPricedEventArgs> OrderPriced;
@@ -116,7 +85,7 @@
 
         private void OnProductAdded(ProductAddedEventArgs e)
         {
-            EventHandler<ProductAddedEventArgs> handler = ProductAdded;
+            var handler = ProductAdded;
             if (handler != null) handler(this, e);
         }
         private void OnOrderPriced(OrderPricedEventArgs e)

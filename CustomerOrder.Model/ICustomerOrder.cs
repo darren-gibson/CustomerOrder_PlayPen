@@ -15,6 +15,7 @@
         Money NetTotal { get; }
         Money AmountDue { get; }
         Money AmountPaid { get; }
+        CustomerOrderStatus Status { get; }
         event EventHandler<ProductAddedEventArgs> ProductAdded;
         event EventHandler<OrderPricedEventArgs> OrderPriced;
     }

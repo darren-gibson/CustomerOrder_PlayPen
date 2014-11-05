@@ -20,5 +20,7 @@
                 }
             }
         }
+
+        public Type ContractType { get { return typeof (TContract); } }
     }
 }

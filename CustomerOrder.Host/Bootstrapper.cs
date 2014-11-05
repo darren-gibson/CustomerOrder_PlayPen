@@ -6,6 +6,7 @@
     using CustomerOrder.Query.EventPublication.Atom;
     using Model;
     using Model.Command;
+    using Model.Order;
     using Model.Repository;
     using Nancy;
     using Nancy.Bootstrapper;
@@ -50,6 +51,7 @@
                     new KeyValuePair<Type, IResultSerializer>(typeof (ProductNotFoundException), new ResultSerializer<ProductNotFoundException, Contract.DTO.ProductNotFoundException>()),
                     new KeyValuePair<Type, IResultSerializer>(typeof (PaymentAdded), new ResultSerializer<PaymentAdded, Contract.DTO.PaymentAdded>()),
                     new KeyValuePair<Type, IResultSerializer>(typeof (PaymentExceededAmountDueException), new ResultSerializer<PaymentExceededAmountDueException, Contract.DTO.PaymentExceededAmountDueException>()),
+                    new KeyValuePair<Type, IResultSerializer>(typeof (InvalidOperationException), new ResultSerializer<InvalidOperationException, Contract.DTO.InvalidStateException>()),
                 });
         }
 

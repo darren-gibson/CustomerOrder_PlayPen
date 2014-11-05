@@ -86,6 +86,25 @@
 
         #endregion
 
+        #region IsZero Tests
+
+        [Test]
+        public void ReturnIsZeroIfTheAmountIsZero()
+        {
+            var m1 = new Money(Currency.GBP, 0m);
+
+            Assert.IsTrue(m1.IsZero);
+        }
+
+        [Test]
+        public void ReturnIsZeroFalseIfTheAmountIsNotZero()
+        {
+            Assert.IsFalse(new Money(Currency.GBP, 1m).IsZero);
+            Assert.IsFalse(new Money(Currency.CHF, -1m).IsZero);
+        }
+
+        #endregion
+
         #region Addition Tests tests
         [Test]
         public void BeAbleToAddTwoMoneyObjectsTogether()

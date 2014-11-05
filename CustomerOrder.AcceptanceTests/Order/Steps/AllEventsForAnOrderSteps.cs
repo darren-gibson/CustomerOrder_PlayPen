@@ -37,7 +37,7 @@
         [When(@"I GET (.*) with an Accept header of (.*)")]
         public void WhenIGetWithAnAcceptHeaderOf(string url, string acceptHeader)
         {
-            Thread.Sleep(50); // Allow the Asynchronous event to happen
+            Thread.Sleep(100); // Allow the Asynchronous event to happen
             Result = Client.GetAllEvents(ReplaceTokensInString(url), acceptHeader);
         }
 

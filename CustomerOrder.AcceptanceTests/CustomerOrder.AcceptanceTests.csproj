@@ -83,6 +83,18 @@
     <Compile Include="Contract\Money.cs" />
     <Compile Include="Contract\PaymentExceededAmountDueException.cs" />
     <Compile Include="Contract\ProductAdded.cs" />
+    <Compile Include="Order\ComlpetedOrderCannotBeChanged.feature.cs">
+      <DependentUpon>ComlpetedOrderCannotBeChanged.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Order\OrderStatus.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrderStatus.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Order\Steps\CompletedOrderCannotBeChangedSteps.cs" />
+    <Compile Include="Order\Steps\OrderStatusSteps.cs" />
     <Compile Include="ProductAdd\AddProductAtomEvents.feature.cs">
       <DependentUpon>AddProductAtomEvents.feature</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -136,6 +148,14 @@
     <Compile Include="PaymentAdd\Steps\PaymentAddSteps.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Order\ComlpetedOrderCannotBeChanged.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>ComlpetedOrderCannotBeChanged.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Order\OrderStatus.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>OrderStatus.feature.cs</LastGenOutput>
+    </None>
     <None Include="ProductAdd\AddProductAtomEvents.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>AddProductAtomEvents.feature.cs</LastGenOutput>
