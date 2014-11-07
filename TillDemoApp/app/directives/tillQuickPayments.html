@@ -1,0 +1,19 @@
+<nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
+    <a class="navmenu-brand" href="#">Payments</a>
+    <ul class="nav navmenu-nav">
+        <li ng-if="order.status != 'Complete'" class="quickproduct" ng-repeat="payment in quickpayments.payments">
+            <a href ng-click="addPaymentByTenderType(payment.tenderType)">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img class="thumbnail" src="{{ payment.imageUrl }}" alt="{{ payment.description }}">
+                        <span>{{ payment.description }}</span>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li ng-if="order.status == 'Complete'">
+            <a href ng-click="startNewOrder();">New Order</a>
+        </li>
+
+    </ul>
+</nav>

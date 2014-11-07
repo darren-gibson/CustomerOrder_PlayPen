@@ -10,40 +10,25 @@ angular.module('tillDempApp.selling', ['ngRoute'])
         }
     ])
     .controller('SellingCtrl', [
-        '$scope', '$http', 'productAdd', 'notify', 'productInfo', function ($scope, $http, productAddSvc, notifySvc, productInfo) {
+        '$scope', 'order', 'productAdd', 'notify', 'productInfo', function ($scope, orderSvc, productAddSvc, notifySvc, productInfo) {
             $scope.order = {};
-
-            if ($scope.orderId == undefined)
-                $scope.orderId = "trn:tesco:order:uuid:1b4b0931-5854-489b-a77c-0cebd15d554b";
             autoRefreshOrder();
 
             function autoRefreshOrder() {
-                console.log("refreshing order...");
-                getOrder($scope.orderId);
-                // Get the Customer Order
+                orderSvc.getOrder().then(function (order) {
+                    $scope.order = order;
+                });
                 // setTimeout(autoRefreshOrder, 2000);
-            }
-
-            function getOrder(orderId) {
-                console.log("getting order..." + orderId);
-                $http.get('http://localhost:3579/orders/' + orderId + '/')
-                    .success(function (order) {
-                        $scope.order = order;
-                        console.log(order);
-                    })
-                    .error(function (data) {
-                        console.log('Error: ' + data);
-                    });
             }
 
             // when submitting the add form, send the text to the node API
             $scope.addProductByForm = function () {
-                productAddSvc.addProduct($scope.orderId, $scope.formData, productAddComplete);
+                productAddSvc.addProduct(orderSvc.getOrderId(), $scope.formData, productAddComplete);
                 $scope.formData = {}; // clear the form so our user is ready to enter another
             };
 
             $scope.addProductById = function (productId) {
-                productAddSvc.addProduct($scope.orderId, { productId: productId }, productAddComplete);
+                productAddSvc.addProduct(orderSvc.getOrderId(), { productId: productId }, productAddComplete);
             };
 
             function productAddComplete(request, contentType, data) {
@@ -53,8 +38,10 @@ angular.module('tillDempApp.selling', ['ngRoute'])
                     productInfo.getProduct(request.productId).then(function (product) {
                         notifySvc.success('Product Added', '{{product}} successfully added.', { "product": product.description });
                     });
+                } else if (contentType == 'application/vnd.tesco.CustomerOrder.InvalidStateException+json') {
+                    notifySvc.error('Cannot Add Product', 'Cannot add a Product now as the order is not in the correct state');
                 }
-                getOrder($scope.orderId);
+                autoRefreshOrder();
             };
         }
     ]);

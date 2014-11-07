@@ -1,4 +1,6 @@
-﻿angular.module('tillDempApp').factory('productInfo', ['$http', '$q', '$log', function ($http, $q) {
+﻿'use strict';
+
+angular.module('tillDempApp').factory('productInfo', ['$http', '$q', '$log', function ($http, $q) {
     var service = {};
     var cache = [];
 

@@ -5,7 +5,7 @@ angular.module('tillDempApp', [
         'ngRoute',
         'angular-growl',
         'tillDempApp.selling',
-        'tillDempApp.view2',
+        'tillDempApp.payment',
         'tillDempApp.version'
     ]).
     config([
