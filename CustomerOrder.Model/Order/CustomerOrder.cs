@@ -35,24 +35,13 @@
         public ProductAdded ProductAdd(ProductIdentifier productIdentifier, Quantity requiredQuantity)
         {
             ITrigger<ProductAdded> trigger = new ProductAddTrigger(_events, productIdentifier, requiredQuantity, RepriceOrder, OnProductAdded);
-            return RunTrigger(trigger);
-        }
-
-        private T RunTrigger<T>(ITrigger<T> command)
-        {
-            if (_orderStateMachine.CanFire(command.TriggerType))
-            {
-                var result = command.Execute();
-                _orderStateMachine.Fire(command.TriggerType);
-                return result;
-            }
-            throw new InvalidOperationException(string.Format("Currently in State {0}, cannot Fire {1}", _orderStateMachine.State, command.TriggerType));
+            return _orderStateMachine.RunTriggerAndTransitionStateIfValid(trigger);
         }
 
         public PaymentAdded PaymentAdd(Tender amount)
         {
             var trigger = new PaymentAddTrigger(_events, amount, AmountDue);
-            return RunTrigger(trigger);
+            return _orderStateMachine.RunTriggerAndTransitionStateIfValid(trigger);
         }
 
         private IPricedOrder RepriceOrder()

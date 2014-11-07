@@ -1,5 +1,6 @@
 ﻿namespace CustomerOrder.Model.Order
 {
+    using System;
     using Stateless;
 
     class CustomerOrderStateMachine : StateMachine<CustomerOrderStatus, Trigger>
@@ -20,6 +21,26 @@
                 .PermitIf(Trigger.PaymentAdd, CustomerOrderStatus.Complete, () => _order.AmountDue.IsZero);
             Configure(CustomerOrderStatus.Paying)
                 .PermitReentryIf(Trigger.PaymentAdd, () => !_order.AmountDue.IsZero);            
+        }
+
+        public T RunTriggerAndTransitionStateIfValid<T>(ITrigger<T> command)
+        {
+            EnsureCanTrigger(command);
+            return RunTriggerAndReturnResult(command);
+        }
+
+        private void EnsureCanTrigger<T>(ITrigger<T> command)
+        {
+            if (!CanFire(command.TriggerType))
+                throw new InvalidOperationException(string.Format("Currently in State {0}, cannot Fire {1}", State,
+                    command.TriggerType));
+        }
+
+        private T RunTriggerAndReturnResult<T>(ITrigger<T> command)
+        {
+            var result = command.Execute();
+            Fire(command.TriggerType);
+            return result;
         }
     }
 }
