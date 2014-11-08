@@ -10,7 +10,7 @@ angular.module('tillDempApp.payment', ['ngRoute'])
         }
     ])
     .controller('PaymentCtrl', [
-        '$scope', 'order', 'moneyFilter', 'notify', 'payment', function ($scope, orderSvc, moneyFilter, notifySvc, paymentSvc) {
+        '$scope', 'order', 'moneyFilter', 'notify', 'payment', '$location', function ($scope, orderSvc, moneyFilter, notifySvc, paymentSvc, $location) {
             $scope.order = {};
             autoRefreshOrder();
 
@@ -23,7 +23,7 @@ angular.module('tillDempApp.payment', ['ngRoute'])
 
             $scope.startNewOrder = function () {
                 orderSvc.new();
-                autoRefreshOrder();
+                $location.path('/selling');
             };
 
             $scope.addPaymentByTenderType = function (tenderType) {

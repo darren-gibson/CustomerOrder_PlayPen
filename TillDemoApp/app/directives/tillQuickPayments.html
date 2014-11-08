@@ -1,7 +1,7 @@
 <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
     <a class="navmenu-brand" href="#">Payments</a>
     <ul class="nav navmenu-nav">
-        <li ng-if="order.status != 'Complete'" class="quickproduct" ng-repeat="payment in quickpayments.payments">
+        <li ng-if="order.status == 'Shopping' || order.status == 'Paying'" class="quickproduct" ng-repeat="payment in quickpayments.payments">
             <a href ng-click="addPaymentByTenderType(payment.tenderType)">
                 <div class="row">
                     <div class="col-xs-12">

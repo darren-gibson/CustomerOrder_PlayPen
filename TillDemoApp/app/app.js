@@ -7,10 +7,18 @@ angular.module('tillDempApp', [
         'tillDempApp.selling',
         'tillDempApp.payment',
         'tillDempApp.version'
-    ]).
+]).
     config([
-        '$routeProvider', function($routeProvider) {
+        '$routeProvider', function ($routeProvider) {
             $routeProvider.otherwise({ redirectTo: '/selling' });
         }
-    ]);
+    ]).
+    run(['$rootScope', function ($rootScope) {
+        function makeCorrectNavTabActive(event, next) {
+            var urlPart = next.substr(next.lastIndexOf('#'));
+            $('ul.nav > li').removeClass('active');
+            $(".nav > li [href='" + urlPart + "']").parent().addClass('active');
+        }
 
+        $rootScope.$on("$locationChangeSuccess", makeCorrectNavTabActive);
+    }]);

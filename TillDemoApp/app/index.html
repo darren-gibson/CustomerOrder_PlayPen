@@ -21,56 +21,56 @@
     <script src="bower_components/numeral/min/numeral.min.js"></script>
     <script src="bower_components/jasny-bootstrap/dist/js/jasny-bootstrap.min.js"></script>
 </head>
-    <body>
-        <div class="navbar navbar-default">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Till Demo</a>
-            </div>
-            <div class="navbar-collapse collapse navbar-responsive-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#/selling">Selling</a></li>
-                    <li><a href="#/payment">Payment</a></li>
-                </ul>
-            </div>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Till Demo</a>
         </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#/selling">Selling</a></li>
+                <li><a href="#/payment">Payment</a></li>
+            </ul>
+        </div>
+    </div>
 
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-        <div ng-view></div>
+    <div ng-view></div>
 
-        <div>Till Demo App: v<span app-version></span></div>
+    <div>Till Demo App: v<span app-version></span></div>
 
-        <!-- In production use:
-            <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-            -->
-        <script src="bower_components/angular/angular.min.js"></script>
-        <script src="bower_components/angular-route/angular-route.min.js"></script>
-        <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
-        <script src="app.js"></script>
-        <script src="view/selling/selling.js"></script>
-        <script src="view/payment/payment.js"></script>
-        <script src="filters/moneyFilter.js"></script>
-        <script src="filters/prodDescFilter.js"></script>
-        <script src="services/productInfo.js"></script>
-        <script src="services/productAdd.js"></script>
-        <script src="services/payment.js"></script>
-        <script src="services/notify.js"></script>
-        <script src="services/order.js"></script>
-        <script src="directives/tillQuickProducts.js"></script>
-        <script src="directives/tillQuickPayments.js"></script>
-        <script src="directives/tillBasketView.js"></script>
-        <script src="directives/tillAutoScroll.js"></script>
-        <script src="directives/tillProductDescription.js"></script>
-        <script src="components/version/version.js"></script>
-        <script src="components/version/version-directive.js"></script>
-        <script src="components/version/interpolate-filter.js"></script>
-        <div growl></div>
-    </body>
+    <!-- In production use:
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+        -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular-growl-v2/build/angular-growl.min.js"></script>
+    <script src="app.js"></script>
+    <script src="view/selling/selling.js"></script>
+    <script src="view/payment/payment.js"></script>
+    <script src="filters/moneyFilter.js"></script>
+    <script src="filters/prodDescFilter.js"></script>
+    <script src="services/productInfo.js"></script>
+    <script src="services/productAdd.js"></script>
+    <script src="services/payment.js"></script>
+    <script src="services/notify.js"></script>
+    <script src="services/order.js"></script>
+    <script src="directives/tillQuickProducts.js"></script>
+    <script src="directives/tillQuickPayments.js"></script>
+    <script src="directives/tillBasketView.js"></script>
+    <script src="directives/tillAutoScroll.js"></script>
+    <script src="directives/tillProductDescription.js"></script>
+    <script src="components/version/version.js"></script>
+    <script src="components/version/version-directive.js"></script>
+    <script src="components/version/interpolate-filter.js"></script>
+    <div growl></div>
+</body>
 </html>
