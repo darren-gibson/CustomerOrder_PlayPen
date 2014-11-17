@@ -1,6 +1,7 @@
 ﻿namespace CustomerOrder.Model.Repository
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class InMemoryCustomerOrderRepository : ICustomerOrderRepository
     {
@@ -15,7 +16,12 @@
             _orderByIdDictionary = new Dictionary<OrderIdentifier, ICustomerOrder>();
         }
 
-        public ICustomerOrder GetOrCreateOrderById(OrderIdentifier identifier)
+        public Task<ICustomerOrder> GetOrCreateOrderById(OrderIdentifier identifier)
+        {
+            return Task.Factory.StartNew(() => InternalGetOrCreateOrderById(identifier));
+        }
+
+        private ICustomerOrder InternalGetOrCreateOrderById(OrderIdentifier identifier)
         {
             if (!_orderByIdDictionary.ContainsKey(identifier))
                 _orderByIdDictionary.Add(identifier, _customerOrderFactory.MakeCustomerOrder(identifier, _defaultCurrency));

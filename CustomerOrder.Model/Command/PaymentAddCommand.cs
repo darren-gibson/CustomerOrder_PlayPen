@@ -18,7 +18,7 @@
 
         public override object Execute()
         {
-            var order = _repository.GetOrCreateOrderById(_orderIdentifier);
+            var order = _repository.GetOrCreateOrderById(_orderIdentifier).Result;
             return order.PaymentAdd(_amount);
         }
     }

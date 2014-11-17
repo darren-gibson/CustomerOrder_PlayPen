@@ -25,7 +25,7 @@
             OrderIdentifier orderIdentifier = Guid.NewGuid();
             _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier, Currency.CHF)).Returns(expectedOrder);
 
-            var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);
+            var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier).Result;
             Assert.AreSame(expectedOrder, actualOrder);
         }
 
@@ -35,8 +35,8 @@
             OrderIdentifier orderIdentifier = Guid.NewGuid();
             _customerOrderFactoryMock.Setup(f => f.MakeCustomerOrder(orderIdentifier, Currency.CHF)).Returns(() => new Mock<ICustomerOrder>().Object);
 
-            var expectedOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);
-            var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier);
+            var expectedOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier).Result;
+            var actualOrder = _repositoryUnderTest.GetOrCreateOrderById(orderIdentifier).Result;
 
             Assert.AreSame(expectedOrder, actualOrder);
         }

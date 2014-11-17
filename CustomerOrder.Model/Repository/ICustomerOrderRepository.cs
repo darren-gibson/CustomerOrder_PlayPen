@@ -1,7 +1,9 @@
 ﻿namespace CustomerOrder.Model.Repository
 {
+    using System.Threading.Tasks;
+
     public interface ICustomerOrderRepository
     {
-        ICustomerOrder GetOrCreateOrderById(OrderIdentifier identifier);
+        Task<ICustomerOrder> GetOrCreateOrderById(OrderIdentifier identifier);
     }
 }

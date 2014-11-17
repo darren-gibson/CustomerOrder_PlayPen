@@ -22,9 +22,9 @@
                 var command = CreateProductAddedCommand(this.Bind<ProductAdd>());
                 return RunCommand(command, Context, parameters.orderId);
             };
-            Get["/{orderId}/"] = parameters =>
+            Get["/{orderId}/", true] = async (parameters, ct) =>
             {
-                var order = repository.GetOrCreateOrderById((string)parameters["orderId"]);
+                var order = await repository.GetOrCreateOrderById((string)parameters["orderId"]);
                 return new CustomerOrder(order);
             };
             Put["/{orderId}/payments"] = parameters =>

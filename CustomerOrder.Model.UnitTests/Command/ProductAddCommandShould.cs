@@ -1,6 +1,7 @@
 ﻿namespace CustomerOrder.Model.UnitTests.Command
 {
     using System;
+    using System.Threading.Tasks;
     using Model.Command;
     using Model.Repository;
     using Moq;
@@ -19,7 +20,7 @@
             _orderIdentifier = Guid.NewGuid();
             _orderRepositoryMock = new Mock<ICustomerOrderRepository>();
             _orderMock = new Mock<ICustomerOrder>();
-            _orderRepositoryMock.Setup(r => r.GetOrCreateOrderById(_orderIdentifier)).Returns(_orderMock.Object);
+            _orderRepositoryMock.Setup(r => r.GetOrCreateOrderById(_orderIdentifier)).Returns(Task.Factory.StartNew(() => _orderMock.Object));
         }
 
         [Test]
